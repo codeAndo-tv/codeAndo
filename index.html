@@ -1117,7 +1117,7 @@ npm start</div></div>
         <!-- ═══════════════════════════════════════════ -->
         <!-- FIN CAPÍTULO 2                             -->
         <!-- ═══════════════════════════════════════════ -->
-                 <!-- ═══════════════════════════════════════════ -->
+        <!-- ═══════════════════════════════════════════ -->
         <!-- CAPÍTULO 2.5: RUTAS RÁPIDAS                 -->
         <!-- ═══════════════════════════════════════════ -->
         <section class="chapter" id="chapter-2-5" style="display:none;">
@@ -1130,7 +1130,7 @@ npm start</div></div>
             <!-- TEORÍA                                    -->
             <!-- ═══════════════════════════════════════ -->
             <div class="theory">
-                <p>Ya creaste tus primeros componentes (Login y Chat). Pero si abrís <code>http://localhost:5300</code>, no ves nada. ¿Por qué? Porque Angular no sabe <strong>cuándo mostrar cada componente</strong>. Necesitamos decirle: "si la URL es <code>/login</code>, mostrá el Login. Si es <code>/chat</code>, mostrá el Chat".</p>
+                <p>Ya creaste tus dos componentes (Login y Chat) y el <code>app.module.ts</code>. Pero si ejecutás <code>npm start</code> y abrís <code>http://localhost:5300</code>, todavía no ves nada. ¿Por qué? Porque Angular no sabe <strong>cuándo mostrar cada componente</strong>. Necesitamos decirle: "si la URL es <code>/login</code>, mostrá el Login. Si es <code>/chat</code>, mostrá el Chat".</p>
                 
                 <p>Esto se llama <strong>enrutamiento</strong> y se configura en 3 pasos simples. No te preocupes si no entendés todo ahora, en el <strong>Capítulo 14</strong> lo vas a ver a fondo. Por ahora, solo necesitás que tu proyecto funcione.</p>
 
@@ -1140,11 +1140,11 @@ npm start</div></div>
 <span class="gr">URL: /chat</span>           →    <span class="ye">ChatComponent</span>
 <span class="gr">URL: /</span>               →    <span class="ye">Redirige a /login</span></div>
 
-                <h3>Los 3 archivos que necesitás tocar</h3>
-                <div class="table-wrapper"><table><thead><tr><th>Archivo</th><th>¿Qué hace?</th></tr></thead><tbody>
-                    <tr><td><code>app.routes.ts</code></td><td>Define qué componente se muestra en cada URL</td></tr>
-                    <tr><td><code>app.module.ts</code></td><td>Registra las rutas y declara los componentes</td></tr>
-                    <tr><td><code>app.component.html</code></td><td>Pone el marcador donde Angular inserta el componente</td></tr>
+                <h3>Lo que ya tenés y lo que vas a hacer ahora</h3>
+                <div class="table-wrapper"><table><thead><tr><th>Archivo</th><th>¿Ya existe?</th><th>¿Qué vas a hacer en este capítulo?</th></tr></thead><tbody>
+                    <tr><td><code>app.module.ts</code></td><td>✅ Sí (creado en Cap 2)</td><td><strong>Modificarlo</strong> para agregar RouterModule</td></tr>
+                    <tr><td><code>app.routes.ts</code></td><td>❌ No</td><td><strong>Crearlo</strong> con las rutas de login y chat</td></tr>
+                    <tr><td><code>app.component.html</code></td><td>✅ Sí</td><td><strong>Modificarlo</strong> para poner &lt;router-outlet&gt;</td></tr>
                 </tbody></table></div>
             </div>
 
@@ -1153,17 +1153,59 @@ npm start</div></div>
             <!-- ═══════════════════════════════════════ -->
             <div class="hands-on">
                 <h3>🛠️ MANOS A LA OBRA</h3>
-                <p><strong>Objetivo:</strong> Configurar las rutas mínimas para que Login y Chat se vean en el navegador.</p>
+                <p><strong>Objetivo:</strong> Modificar el módulo, crear las rutas y configurar el componente principal para ver Login y Chat en el navegador.</p>
 
                 <div class="step">
-                    <p><strong>📋 Paso 1: Crear el archivo de rutas</strong></p>
-                    <p>🧠 PRIMERO PENSÁ: ¿Qué URLs necesitamos? Una para el login y otra para el chat.</p>
+                    <p><strong>📋 Paso 1: MODIFICAR app.module.ts (agregar RouterModule)</strong></p>
+                    <p>🧠 PRIMERO PENSÁ: En el Capítulo 2 creaste <code>app.module.ts</code> con los componentes declarados. Ahora hay que agregarle el sistema de rutas.</p>
                     
                     <button class="collapsible-btn" onclick="toggleCollapsible('code-2-5-1')">👁️ VER CÓDIGO COMPLETO (si no te sale)</button>
                     <div class="collapsible-content" id="code-2-5-1">
-                        <p><strong>Creá <code>src/app/app.routes.ts</code> con este contenido:</strong></p>
-                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 app.routes.ts</span></div><div class="code-content"><span class="kw">import</span> { <span class="tp">Routes</span> } <span class="kw">from</span> <span class="str">'@angular/router'</span>;
-<span class="cm">// Importamos los componentes que queremos mostrar</span>
+                        <p><strong>Abrí <code>src/app/app.module.ts</code> y reemplazá TODO por esto:</strong></p>
+                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 app.module.ts</span></div><div class="code-content"><span class="kw">import</span> { <span class="tp">NgModule</span> } <span class="kw">from</span> <span class="str">'@angular/core'</span>;
+<span class="kw">import</span> { <span class="tp">BrowserModule</span> } <span class="kw">from</span> <span class="str">'@angular/platform-browser'</span>;
+<span class="kw">import</span> { <span class="tp">RouterModule</span> } <span class="kw">from</span> <span class="str">'@angular/router'</span>;
+<span class="cm">//     └──────────┘</span>
+<span class="cm">//     Módulo que maneja las rutas (NUEVO)</span>
+
+<span class="kw">import</span> { <span class="tp">AppComponent</span> } <span class="kw">from</span> <span class="str">'./app.component'</span>;
+<span class="kw">import</span> { <span class="tp">LoginComponent</span> } <span class="kw">from</span> <span class="str">'./login/login.component'</span>;
+<span class="kw">import</span> { <span class="tp">ChatComponent</span> } <span class="kw">from</span> <span class="str">'./chat/chat.component'</span>;
+<span class="kw">import</span> { <span class="var">routes</span> } <span class="kw">from</span> <span class="str">'./app.routes'</span>;
+<span class="cm">//     └────┘</span>
+<span class="cm">//     Las rutas que vamos a crear en el Paso 2</span>
+
+<span class="dec">@NgModule</span>({
+  <span class="pr">declarations</span>: [
+    <span class="tp">AppComponent</span>,
+    <span class="tp">LoginComponent</span>,
+    <span class="tp">ChatComponent</span>
+  ],
+  <span class="pr">imports</span>: [
+    <span class="tp">BrowserModule</span>,
+    <span class="tp">RouterModule</span>.<span class="fn">forRoot</span>(<span class="var">routes</span>)  <span class="cm">// ← NUEVO: registra las rutas</span>
+  ],
+  <span class="pr">providers</span>: [],
+  <span class="pr">bootstrap</span>: [<span class="tp">AppComponent</span>],
+})
+<span class="kw">export</span> <span class="kw">class</span> <span class="tp">AppModule</span> {}</div></div>
+                        <p>💡 <strong>¿Qué cambió del Capítulo 2?</strong><br>
+                        Se agregaron <strong>3 líneas nuevas</strong>:<br>
+                        <code>import { RouterModule } from '@angular/router'</code> → trae el sistema de rutas<br>
+                        <code>import { routes } from './app.routes'</code> → importa las rutas que creamos en el Paso 2<br>
+                        <code>RouterModule.forRoot(routes)</code> → activa las rutas en la aplicación</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <p><strong>📋 Paso 2: CREAR el archivo de rutas</strong></p>
+                    <p>🧠 PRIMERO PENSÁ: ¿Qué URLs necesitamos? Una para el login y otra para el chat.</p>
+                    
+                    <button class="collapsible-btn" onclick="toggleCollapsible('code-2-5-2')">👁️ VER CÓDIGO COMPLETO (si no te sale)</button>
+                    <div class="collapsible-content" id="code-2-5-2">
+                        <p><strong>Creá el archivo <code>src/app/app.routes.ts</code> con este contenido:</strong></p>
+                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 app.routes.ts (archivo NUEVO)</span></div><div class="code-content"><span class="kw">import</span> { <span class="tp">Routes</span> } <span class="kw">from</span> <span class="str">'@angular/router'</span>;
+<span class="cm">// Importamos los componentes que ya creamos en el Capítulo 2</span>
 <span class="kw">import</span> { <span class="tp">ChatComponent</span> } <span class="kw">from</span> <span class="str">'./chat/chat.component'</span>;
 <span class="kw">import</span> { <span class="tp">LoginComponent</span> } <span class="kw">from</span> <span class="str">'./login/login.component'</span>;
 
@@ -1183,53 +1225,12 @@ npm start</div></div>
                 </div>
 
                 <div class="step">
-                    <p><strong>📋 Paso 2: Configurar el módulo principal</strong></p>
-                    <p>🧠 PRIMERO PENSÁ: ¿Dónde le decimos a Angular que use estas rutas y que existen nuestros componentes?</p>
-                    
-                    <button class="collapsible-btn" onclick="toggleCollapsible('code-2-5-2')">👁️ VER CÓDIGO COMPLETO (si no te sale)</button>
-                    <div class="collapsible-content" id="code-2-5-2">
-                        <p><strong>Abrí <code>src/app/app.module.ts</code> y reemplazá todo por esto:</strong></p>
-                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 app.module.ts</span></div><div class="code-content"><span class="kw">import</span> { <span class="tp">NgModule</span> } <span class="kw">from</span> <span class="str">'@angular/core'</span>;
-<span class="kw">import</span> { <span class="tp">BrowserModule</span> } <span class="kw">from</span> <span class="str">'@angular/platform-browser'</span>;
-<span class="kw">import</span> { <span class="tp">RouterModule</span> } <span class="kw">from</span> <span class="str">'@angular/router'</span>;
-<span class="cm">//     └──────────┘</span>
-<span class="cm">//     Módulo que maneja las rutas</span>
-
-<span class="kw">import</span> { <span class="tp">AppComponent</span> } <span class="kw">from</span> <span class="str">'./app.component'</span>;
-<span class="kw">import</span> { <span class="tp">LoginComponent</span> } <span class="kw">from</span> <span class="str">'./login/login.component'</span>;
-<span class="kw">import</span> { <span class="tp">ChatComponent</span> } <span class="kw">from</span> <span class="str">'./chat/chat.component'</span>;
-<span class="kw">import</span> { <span class="var">routes</span> } <span class="kw">from</span> <span class="str">'./app.routes'</span>;
-<span class="cm">//     └────┘</span>
-<span class="cm">//     Las rutas que definimos en el paso 1</span>
-
-<span class="dec">@NgModule</span>({
-  <span class="pr">declarations</span>: [
-    <span class="tp">AppComponent</span>,
-    <span class="tp">LoginComponent</span>,    <span class="cm">// ← Registramos el componente de login</span>
-    <span class="tp">ChatComponent</span>       <span class="cm">// ← Registramos el componente de chat</span>
-  ],
-  <span class="pr">imports</span>: [
-    <span class="tp">BrowserModule</span>,
-    <span class="tp">RouterModule</span>.<span class="fn">forRoot</span>(<span class="var">routes</span>)  <span class="cm">// ← Registramos las rutas</span>
-  ],
-  <span class="pr">providers</span>: [],
-  <span class="pr">bootstrap</span>: [<span class="tp">AppComponent</span>],
-})
-<span class="kw">export</span> <span class="kw">class</span> <span class="tp">AppModule</span> {}</div></div>
-                        <p>💡 <strong>Explicación rápida:</strong><br>
-                        <code>declarations</code> → le dice a Angular "estos componentes existen, son míos"<br>
-                        <code>imports</code> → trae módulos que necesitamos (<code>RouterModule.forRoot(routes)</code> activa las rutas)<br>
-                        <code>bootstrap</code> → el componente que arranca primero (siempre AppComponent)</p>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <p><strong>📋 Paso 3: Poner el marcador de posición</strong></p>
+                    <p><strong>📋 Paso 3: MODIFICAR app.component.html (poner el marcador)</strong></p>
                     <p>🧠 PRIMERO PENSÁ: ¿Dónde va a poner Angular el componente según la URL?</p>
                     
                     <button class="collapsible-btn" onclick="toggleCollapsible('code-2-5-3')">👁️ VER CÓDIGO COMPLETO (si no te sale)</button>
                     <div class="collapsible-content" id="code-2-5-3">
-                        <p><strong>Abrí <code>src/app/app.component.html</code> y borrá todo. Dejá solo esto:</strong></p>
+                        <p><strong>Abrí <code>src/app/app.component.html</code>, borrá todo y dejá solo esto:</strong></p>
                         <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 app.component.html</span></div><div class="code-content"><span class="jsx-tag">&lt;router-outlet&gt;&lt;/router-outlet&gt;</span>
 <span class="cm">&lt;!-- └────────────────────────────┘</span>
 <span class="cm">     Esto es un MARCADOR DE POSICIÓN.</span>
@@ -1245,12 +1246,34 @@ npm start</div></div>
                 <div class="step">
                     <p><strong>📋 Paso 4: ¡Probar!</strong></p>
                     <p>Ejecutá en la terminal:</p>
-                    <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">💻 Terminal</span></div><div class="code-content">npm start</div></div>
+                    <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">💻 Terminal</span></div><div class="code-content">ng serve --port 5300</div></div>
                     <p>Abrí tu navegador en <code>http://localhost:5300</code>. Deberías ser redirigido automáticamente a <code>/login</code> y ver el formulario de login.</p>
-                    <p>Si escribís manualmente <code>http://localhost:5300/chat</code>, deberías ver el componente del chat.</p>
+                    <p>Si escribís manualmente <code>http://localhost:5300/chat</code>, deberías ver la pantalla del chat con la barra lateral.</p>
                 </div>
 
                 <div class="note">
+                    <strong>📁 ¿Cómo quedó la estructura de carpetas ahora?</strong>
+                    <div class="diagram" style="margin-top:10px;">utnito/
+└── src/
+    └── app/
+        ├── app.component.ts
+        ├── app.component.html     ← MODIFICADO: tiene &lt;router-outlet&gt;
+        ├── app.component.css
+        ├── app.module.ts          ← MODIFICADO: tiene RouterModule.forRoot()
+        ├── <span class="gr">app.routes.ts</span>         ← NUEVO: define las rutas
+        │
+        ├── login/
+        │   ├── login.component.ts
+        │   ├── login.component.html
+        │   └── login.component.css
+        │
+        └── chat/
+            ├── chat.component.ts
+            ├── chat.component.html
+            └── chat.component.css</div>
+                </div>
+
+                <div class="warning">
                     <strong>⚠️ IMPORTANTE: Cada vez que crees un componente nuevo...</strong><br>
                     Vas a tener que hacer 3 cosas para poder verlo:<br>
                     1. <strong>Importarlo</strong> en <code>app.module.ts</code> (arriba del todo)<br>
