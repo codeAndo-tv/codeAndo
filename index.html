@@ -761,10 +761,11 @@ npm start</div></div>
             <!-- ═══════════════════════════════════════ -->
             <div class="hands-on">
                 <h3>🛠️ MANOS A LA OBRA</h3>
-                <p><strong>Objetivo:</strong> Crear el LoginComponent de UTNito.</p>
+                <p><strong>Objetivo:</strong> Crear los dos componentes principales de UTNito: LoginComponent y ChatComponent, y dejarlos listos para configurar las rutas.</p>
 
+                <!-- ═══════════════ PASO 1: LOGIN ═══════════════ -->
                 <div class="step">
-                    <p><strong>📋 Paso 1: Generar el componente con Angular CLI</strong></p>
+                    <p><strong>📋 Paso 1: Generar el LoginComponent con Angular CLI</strong></p>
                     <p>🧠 PRIMERO PENSÁ: ¿Dónde debería vivir el componente de login? Angular CLI lo va a crear en una carpeta llamada <code>login</code> dentro de <code>src/app/</code>.</p>
                     
                     <button class="collapsible-btn" onclick="toggleCollapsible('code-2-1')">👁️ VER COMANDO COMPLETO (si no te sale)</button>
@@ -783,7 +784,7 @@ npm start</div></div>
                 </div>
 
                 <div class="step">
-                    <p><strong>📋 Paso 2: Escribir el archivo .ts (el cerebro)</strong></p>
+                    <p><strong>📋 Paso 2: Escribir el archivo .ts del Login (el cerebro)</strong></p>
                     <p>🧠 PRIMERO PENSÁ: ¿Qué variables necesita el login? (pista: usuario, contraseña)</p>
                     
                     <button class="collapsible-btn" onclick="toggleCollapsible('code-2-2')">👁️ VER CÓDIGO COMPLETO (si no te sale)</button>
@@ -813,7 +814,7 @@ npm start</div></div>
                 </div>
 
                 <div class="step">
-                    <p><strong>📋 Paso 3: Escribir el archivo .html (la cara)</strong></p>
+                    <p><strong>📋 Paso 3: Escribir el archivo .html del Login (la cara)</strong></p>
                     <p>🧠 PRIMERO PENSÁ: ¿Qué elementos HTML necesitás para un formulario de login? (pista: título, inputs, botón)</p>
                     
                     <button class="collapsible-btn" onclick="toggleCollapsible('code-2-3')">👁️ VER CÓDIGO COMPLETO (si no te sale)</button>
@@ -841,7 +842,7 @@ npm start</div></div>
                 </div>
 
                 <div class="step">
-                    <p><strong>📋 Paso 4: Escribir el archivo .css (el maquillaje)</strong></p>
+                    <p><strong>📋 Paso 4: Escribir el archivo .css del Login (el maquillaje)</strong></p>
                     <p>🧠 PRIMERO PENSÁ: ¿Cómo centrarías el formulario en la pantalla?</p>
                     
                     <button class="collapsible-btn" onclick="toggleCollapsible('code-2-4')">👁️ VER CÓDIGO COMPLETO (si no te sale)</button>
@@ -909,10 +910,183 @@ npm start</div></div>
                     </div>
                 </div>
 
+                <!-- ═══════════════ PASO 5: CHAT ═══════════════ -->
                 <div class="step">
-                    <p><strong>📋 Paso 5: Verificar que funcione</strong></p>
-                    <p>Ejecutá <code>ng serve</code> o <code>npm start</code> y abrí <code>http://localhost:5300</code>.</p>
-                    <p>Por ahora no vas a ver el login porque no configuramos las rutas ni declaramos el componente. Eso lo haremos en los próximos capítulos. Pero el componente ya existe y no debería dar errores de compilación.</p>
+                    <p><strong>📋 Paso 5: Generar el ChatComponent con Angular CLI</strong></p>
+                    <p>🧠 PRIMERO PENSÁ: UTNito tiene dos pantallas. Ya creamos el Login. ¿Cuál falta?</p>
+                    
+                    <button class="collapsible-btn" onclick="toggleCollapsible('code-2-5')">👁️ VER COMANDO COMPLETO (si no te sale)</button>
+                    <div class="collapsible-content" id="code-2-5">
+                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">💻 Terminal (en la carpeta utnito)</span></div><div class="code-content">ng generate component chat</div></div>
+                        <p>💡 <strong>Explicación:</strong><br>
+                        Igual que con el login, Angular CLI crea la carpeta <code>src/app/chat/</code> con los 4 archivos.<br>
+                        El <code>ChatComponent</code> va a ser la pantalla principal donde el usuario ve sus conversaciones.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <p><strong>📋 Paso 6: Escribir el archivo .ts del Chat (el cerebro)</strong></p>
+                    <p>🧠 PRIMERO PENSÁ: ¿Qué necesita saber el chat? (pista: una lista de conversaciones, un mensaje para escribir)</p>
+                    
+                    <button class="collapsible-btn" onclick="toggleCollapsible('code-2-6')">👁️ VER CÓDIGO COMPLETO (si no te sale)</button>
+                    <div class="collapsible-content" id="code-2-6">
+                        <p><strong>Abrí <code>src/app/chat/chat.component.ts</code> y reemplazá TODO por esto:</strong></p>
+                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 chat.component.ts</span></div><div class="code-content"><span class="kw">import</span> { <span class="tp">Component</span> } <span class="kw">from</span> <span class="str">'@angular/core'</span>;
+
+<span class="dec">@Component</span>({
+  <span class="pr">selector</span>: <span class="str">'app-chat'</span>,
+  <span class="pr">templateUrl</span>: <span class="str">'./chat.component.html'</span>,
+  <span class="pr">styleUrls</span>: [<span class="str">'./chat.component.css'</span>],
+  <span class="pr">standalone</span>: <span class="kw">false</span>,
+})
+<span class="kw">export</span> <span class="kw">class</span> <span class="tp">ChatComponent</span> {
+  <span class="cm">// Título que se muestra en la pantalla de chat</span>
+  <span class="var">title</span>: <span class="tp">string</span> = <span class="str">'UTNito Chat'</span>;
+  
+  <span class="cm">// Mensaje que el usuario está escribiendo</span>
+  <span class="var">draftMessage</span>: <span class="tp">string</span> = <span class="str">''</span>;
+}</div></div>
+                        <p>💡 <strong>Explicación línea por línea:</strong><br>
+                        <code>selector: 'app-chat'</code> → Así se usa en HTML: <code>&lt;app-chat&gt;&lt;/app-chat&gt;</code><br>
+                        <code>standalone: false</code> → Usa el sistema de módulos tradicional<br>
+                        <code>title: string = 'UTNito Chat'</code> → Variable con el título de la pantalla<br>
+                        <code>draftMessage: string = ''</code> → Donde se guarda lo que el usuario escribe (por ahora vacío)</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <p><strong>📋 Paso 7: Escribir el archivo .html del Chat (la cara)</strong></p>
+                    <p>🧠 PRIMERO PENSÁ: ¿Qué se ve en una pantalla de chat? (pista: una barra lateral con conversaciones, un área de mensajes)</p>
+                    
+                    <button class="collapsible-btn" onclick="toggleCollapsible('code-2-7')">👁️ VER CÓDIGO COMPLETO (si no te sale)</button>
+                    <div class="collapsible-content" id="code-2-7">
+                        <p><strong>Abrí <code>src/app/chat/chat.component.html</code> y reemplazá TODO por esto:</strong></p>
+                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 chat.component.html</span></div><div class="code-content"><span class="jsx-tag">&lt;div class="chat-layout"&gt;</span>
+  <span class="cm">&lt;!-- Barra lateral: lista de conversaciones --&gt;</span>
+  <span class="jsx-tag">&lt;aside class="sidebar"&gt;</span>
+    <span class="jsx-tag">&lt;h2&gt;</span>{{ title }}<span class="jsx-tag">&lt;/h2&gt;</span>
+    <span class="jsx-tag">&lt;p&gt;</span>Seleccioná una conversación<span class="jsx-tag">&lt;/p&gt;</span>
+  <span class="jsx-tag">&lt;/aside&gt;</span>
+
+  <span class="cm">&lt;!-- Área principal: mensajes --&gt;</span>
+  <span class="jsx-tag">&lt;main class="chat-main"&gt;</span>
+    <span class="jsx-tag">&lt;p&gt;</span>Bienvenido al chat de UTNito<span class="jsx-tag">&lt;/p&gt;</span>
+    <span class="jsx-tag">&lt;p&gt;</span>Acá vas a ver los mensajes cuando selecciones una conversación.<span class="jsx-tag">&lt;/p&gt;</span>
+  <span class="jsx-tag">&lt;/main&gt;</span>
+<span class="jsx-tag">&lt;/div&gt;</span></div></div>
+                        <p>💡 <strong>Explicación:</strong><br>
+                        <code>{{ title }}</code> → interpolación: muestra la variable <code>title</code> del TypeScript ("UTNito Chat")<br>
+                        <code>&lt;aside class="sidebar"&gt;</code> → barra lateral donde van a aparecer las conversaciones<br>
+                        <code>&lt;main class="chat-main"&gt;</code> → área principal donde se muestran los mensajes<br>
+                        Por ahora es una estructura simple. En los próximos capítulos le vamos a agregar la lista de conversaciones y los mensajes reales.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <p><strong>📋 Paso 8: Escribir el archivo .css del Chat (el maquillaje)</strong></p>
+                    <p>🧠 PRIMERO PENSÁ: ¿Cómo organizarías visualmente una pantalla de chat? (pista: barra lateral a la izquierda, mensajes a la derecha)</p>
+                    
+                    <button class="collapsible-btn" onclick="toggleCollapsible('code-2-8')">👁️ VER CÓDIGO COMPLETO (si no te sale)</button>
+                    <div class="collapsible-content" id="code-2-8">
+                        <p><strong>Abrí <code>src/app/chat/chat.component.css</code> y reemplazá TODO por esto:</strong></p>
+                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 chat.component.css</span></div><div class="code-content"><span class="pr">.chat-layout</span> {
+  <span class="var">display</span>: <span class="kw">flex</span>;
+  <span class="var">height</span>: <span class="num">100vh</span>;
+  <span class="var">background-color</span>: <span class="str">#1f2024</span>;
+  <span class="var">color</span>: <span class="str">#ececf1</span>;
+}
+
+<span class="pr">.sidebar</span> {
+  <span class="var">width</span>: <span class="num">300px</span>;
+  <span class="var">background-color</span>: <span class="str">#25272d</span>;
+  <span class="var">border-right</span>: <span class="num">1px</span> <span class="kw">solid</span> <span class="str">#353842</span>;
+  <span class="var">padding</span>: <span class="num">20px</span>;
+}
+
+<span class="pr">.sidebar h2</span> {
+  <span class="var">margin</span>: <span class="num">0</span> <span class="num">0</span> <span class="num">15px</span> <span class="num">0</span>;
+  <span class="var">font-size</span>: <span class="num">20px</span>;
+  <span class="var">color</span>: <span class="str">#cf5f6f</span>;
+}
+
+<span class="pr">.chat-main</span> {
+  <span class="var">flex</span>: <span class="num">1</span>;
+  <span class="var">padding</span>: <span class="num">40px</span>;
+  <span class="var">display</span>: <span class="kw">flex</span>;
+  <span class="var">flex-direction</span>: <span class="kw">column</span>;
+  <span class="var">justify-content</span>: <span class="kw">center</span>;
+  <span class="var">align-items</span>: <span class="kw">center</span>;
+  <span class="var">text-align</span>: <span class="kw">center</span>;
+}
+
+<span class="pr">.chat-main p</span> {
+  <span class="var">color</span>: <span class="str">#a0a0b0</span>;
+  <span class="var">font-size</span>: <span class="num">16px</span>;
+}</div></div>
+                        <p>💡 <strong>Explicación:</strong><br>
+                        <code>display: flex</code> → organiza la sidebar y el chat uno al lado del otro<br>
+                        <code>height: 100vh</code> → ocupa toda la altura de la pantalla<br>
+                        <code>.sidebar</code> → Panel lateral fijo de 300px con borde derecho<br>
+                        <code>.chat-main</code> → Ocupa el resto del espacio (flex: 1) y centra el contenido</p>
+                    </div>
+                </div>
+
+                <!-- ═══════════════ PASO 9: APP.MODULE.TS ═══════════════ -->
+                <div class="step">
+                    <p><strong>📋 Paso 9: Crear el archivo app.module.ts</strong></p>
+                    <p>🧠 PRIMERO PENSÁ: Angular necesita saber que nuestros componentes existen. ¿Dónde se lo decimos?</p>
+                    
+                    <button class="collapsible-btn" onclick="toggleCollapsible('code-2-9')">👁️ VER CÓDIGO COMPLETO (si no te sale)</button>
+                    <div class="collapsible-content" id="code-2-9">
+                        <p><strong>Abrí <code>src/app/app.module.ts</code> y reemplazá TODO por esto:</strong></p>
+                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 app.module.ts</span></div><div class="code-content"><span class="kw">import</span> { <span class="tp">NgModule</span> } <span class="kw">from</span> <span class="str">'@angular/core'</span>;
+<span class="kw">import</span> { <span class="tp">BrowserModule</span> } <span class="kw">from</span> <span class="str">'@angular/platform-browser'</span>;
+
+<span class="kw">import</span> { <span class="tp">AppComponent</span> } <span class="kw">from</span> <span class="str">'./app.component'</span>;
+<span class="kw">import</span> { <span class="tp">LoginComponent</span> } <span class="kw">from</span> <span class="str">'./login/login.component'</span>;
+<span class="kw">import</span> { <span class="tp">ChatComponent</span> } <span class="kw">from</span> <span class="str">'./chat/chat.component'</span>;
+
+<span class="dec">@NgModule</span>({
+  <span class="pr">declarations</span>: [
+    <span class="tp">AppComponent</span>,
+    <span class="tp">LoginComponent</span>,
+    <span class="tp">ChatComponent</span>
+  ],
+  <span class="pr">imports</span>: [
+    <span class="tp">BrowserModule</span>
+  ],
+  <span class="pr">providers</span>: [],
+  <span class="pr">bootstrap</span>: [<span class="tp">AppComponent</span>],
+})
+<span class="kw">export</span> <span class="kw">class</span> <span class="tp">AppModule</span> {}</div></div>
+                        <p>💡 <strong>Explicación:</strong><br>
+                        <code>declarations</code> → Le decimos a Angular qué componentes existen en nuestra aplicación. Sin esto, Angular no los reconoce.<br>
+                        <code>imports</code> → Traemos <code>BrowserModule</code>, obligatorio para que la app funcione en el navegador.<br>
+                        <code>bootstrap</code> → El componente que arranca primero (siempre <code>AppComponent</code>).<br><br>
+                        <strong>⚠️ En el próximo capítulo (2.5) vamos a modificar este archivo para agregar las rutas.</strong></p>
+                    </div>
+                </div>
+
+                <div class="note">
+                    <strong>📁 ¿Cómo quedó la estructura de carpetas hasta ahora?</strong>
+                    <div class="diagram" style="margin-top:10px;">utnito/
+└── src/
+    └── app/
+        ├── app.component.ts
+        ├── app.component.html
+        ├── app.component.css
+        ├── <span class="gr">app.module.ts</span>          ← NUEVO: declara los componentes
+        │
+        ├── <span class="ye">login/</span>                 ← NUEVO: carpeta del login
+        │   ├── login.component.ts
+        │   ├── login.component.html
+        │   └── login.component.css
+        │
+        └── <span class="pu">chat/</span>                  ← NUEVO: carpeta del chat
+            ├── chat.component.ts
+            ├── chat.component.html
+            └── chat.component.css</div>
+                    <p style="margin-top:8px;">Ya tenés los dos componentes creados y el módulo configurado. En el <strong>Capítulo 2.5</strong> vas a agregar el <code>app.routes.ts</code> y modificar el <code>app.module.ts</code> para que puedas ver estos componentes en el navegador.</p>
                 </div>
             </div>
 
@@ -920,7 +1094,7 @@ npm start</div></div>
             <!-- [FUTURO] MENSAJE DE ÁNIMO               -->
             <!-- ═══════════════════════════════════════ -->
             <div class="motivation-message" id="motivation-2">
-                <p>¡Ya creaste tu primer componente! En el próximo capítulo vas a darle vida con binding.</p>
+                <p>¡Ya creaste tus dos primeros componentes! En el próximo capítulo vas a configurar las rutas para verlos en el navegador.</p>
             </div>
 
             <!-- ═══════════════════════════════════════ -->
@@ -941,7 +1115,7 @@ npm start</div></div>
 
         </section>
         <!-- ═══════════════════════════════════════════ -->
-        <!-- FIN CAPÍTULO 2: COMPONENTES                -->
+        <!-- FIN CAPÍTULO 2                             -->
         <!-- ═══════════════════════════════════════════ -->
                  <!-- ═══════════════════════════════════════════ -->
         <!-- CAPÍTULO 2.5: RUTAS RÁPIDAS                 -->
