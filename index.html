@@ -1690,7 +1690,93 @@ npm start</div></div>
                         <code>path: '**'</code> → comodín: cualquier URL que no exista, redirige al login</p>
                     </div>
                 </div>
+                                <!-- ═══════════════ PASO 2.5: NAVEGACIÓN BÁSICA ═══════════════ -->
+                <div class="step">
+                    <p><strong>📋 Paso 2.5: Hacer que los botones naveguen (Login → Chat, Chat → Login)</strong></p>
+                    <p>🧠 PRIMERO PENSÁ: Ya tenés las rutas definidas. Pero si tocás el botón "Login", no pasa nada. ¿Cómo le decimos a Angular que navegue a otra pantalla?</p>
+                    
+                    <button class="collapsible-btn" onclick="toggleCollapsible('code-2-5-2-5')">👁️ VER CÓDIGO COMPLETO (si no te sale)</button>
+                    <div class="collapsible-content" id="code-2-5-2-5">
+                        
+                        <p><strong>📄 Modificá <code>login.component.ts</code> (agregá el Router y el método onLogin):</strong></p>
+                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 login.component.ts</span></div><div class="code-content"><span class="kw">import</span> { <span class="tp">Component</span> } <span class="kw">from</span> <span class="str">'@angular/core'</span>;
+<span class="kw">import</span> { <span class="tp">Router</span> } <span class="kw">from</span> <span class="str">'@angular/router'</span>;  <span class="cm">// ← NUEVO: importamos el GPS de Angular</span>
 
+<span class="dec">@Component</span>({
+  <span class="pr">selector</span>: <span class="str">'app-login'</span>,
+  <span class="pr">templateUrl</span>: <span class="str">'./login.component.html'</span>,
+  <span class="pr">styleUrls</span>: [<span class="str">'./login.component.css'</span>],
+  <span class="pr">standalone</span>: <span class="kw">false</span>,
+})
+<span class="kw">export</span> <span class="kw">class</span> <span class="tp">LoginComponent</span> {
+  <span class="var">username</span>: <span class="tp">string</span> = <span class="str">''</span>;
+  <span class="var">password</span>: <span class="tp">string</span> = <span class="str">''</span>;
+
+  <span class="cm">// NUEVO: inyectamos Router en el constructor</span>
+  <span class="cm">// Angular nos da una instancia automáticamente</span>
+  <span class="kw">constructor</span>(<span class="kw">private</span> <span class="var">router</span>: <span class="tp">Router</span>) {}
+
+  <span class="cm">// NUEVO: método que se ejecuta cuando el usuario hace click en Login</span>
+  <span class="fn">onLogin</span>(): <span class="kw">void</span> {
+    <span class="kw">this</span>.<span class="var">router</span>.<span class="fn">navigate</span>([<span class="str">'/chat'</span>]);
+    <span class="cm">// └────────────┘</span>
+    <span class="cm">// Navega a la ruta /chat sin recargar la página</span>
+  }
+}</div></div>
+
+                        <p><strong>📄 Modificá <code>login.component.html</code> (cambiá el botón para que llame a onLogin):</strong></p>
+                        <p>Solo cambiá <strong>una línea</strong>. Buscá el <code>&lt;button&gt;</code> y reemplazalo por esto:</p>
+                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 login.component.html (solo cambia el botón)</span></div><div class="code-content"><span class="cm">&lt;!-- ANTES --&gt;</span>
+<span class="jsx-tag">&lt;button type="submit"&gt;</span>Login<span class="jsx-tag">&lt;/button&gt;</span>
+
+<span class="cm">&lt;!-- AHORA --&gt;</span>
+<span class="jsx-tag">&lt;button type="button" (click)="onLogin()"&gt;</span>Login<span class="jsx-tag">&lt;/button&gt;</span>
+<span class="cm">&lt;!--       └──────────┘ └─────────────────┘</span>
+<span class="cm">        type="button"   (click): cuando hagan click,</span>
+<span class="cm">        evita que el    ejecuta el método onLogin()</span>
+<span class="cm">        formulario      del TypeScript</span>
+<span class="cm">        se envíe solo</span>
+<span class="cm">--&gt;</span></div></div>
+
+                        <p><strong>📄 Modificá <code>chat.component.ts</code> (agregá el Router y el método onLogout):</strong></p>
+                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 chat.component.ts</span></div><div class="code-content"><span class="kw">import</span> { <span class="tp">Component</span> } <span class="kw">from</span> <span class="str">'@angular/core'</span>;
+<span class="kw">import</span> { <span class="tp">Router</span> } <span class="kw">from</span> <span class="str">'@angular/router'</span>;  <span class="cm">// ← NUEVO</span>
+
+<span class="dec">@Component</span>({
+  <span class="pr">selector</span>: <span class="str">'app-chat'</span>,
+  <span class="pr">templateUrl</span>: <span class="str">'./chat.component.html'</span>,
+  <span class="pr">styleUrls</span>: [<span class="str">'./chat.component.css'</span>],
+  <span class="pr">standalone</span>: <span class="kw">false</span>,
+})
+<span class="kw">export</span> <span class="kw">class</span> <span class="tp">ChatComponent</span> {
+  <span class="var">title</span>: <span class="tp">string</span> = <span class="str">'UTNito Chat'</span>;
+  <span class="var">draftMessage</span>: <span class="tp">string</span> = <span class="str">''</span>;
+
+  <span class="cm">// NUEVO: inyectamos Router</span>
+  <span class="kw">constructor</span>(<span class="kw">private</span> <span class="var">router</span>: <span class="tp">Router</span>) {}
+
+  <span class="cm">// NUEVO: método para volver al login</span>
+  <span class="fn">onLogout</span>(): <span class="kw">void</span> {
+    <span class="kw">this</span>.<span class="var">router</span>.<span class="fn">navigate</span>([<span class="str">'/login'</span>]);
+  }
+}</div></div>
+
+                        <p><strong>📄 Modificá <code>chat.component.html</code> (cambiá "Logout" por un botón):</strong></p>
+                        <p>Buscá el <code>&lt;span&gt;Logout&lt;/span&gt;</code> y reemplazalo por esto:</p>
+                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 chat.component.html (solo cambia el logout)</span></div><div class="code-content"><span class="cm">&lt;!-- ANTES --&gt;</span>
+<span class="jsx-tag">&lt;span&gt;</span>Logout<span class="jsx-tag">&lt;/span&gt;</span>
+
+<span class="cm">&lt;!-- AHORA --&gt;</span>
+<span class="jsx-tag">&lt;button class="logout-btn" (click)="onLogout()"&gt;</span>Log out<span class="jsx-tag">&lt;/button&gt;</span></div></div>
+
+                        <p>💡 <strong>Explicación de lo que hicimos:</strong><br>
+                        <code>Router</code> → Es el GPS de Angular. Se inyecta en el constructor.<br>
+                        <code>router.navigate(['/chat'])</code> → Navega a la ruta <code>/chat</code> sin recargar la página.<br>
+                        <code>(click)="onLogin()"</code> → Le dice a Angular: "cuando hagan click, ejecutá el método onLogin()".<br>
+                        <code>type="button"</code> → Evita que el formulario se envíe solo (comportamiento por defecto de HTML).<br><br>
+                        <strong>⚠️ No te preocupes si no entendés todo ahora.</strong> Esto usa dos temas que vamos a ver en detalle más adelante: <strong>Event Binding (Capítulo 4)</strong> y <strong>Navegación con Router (Capítulo 15)</strong>. Por ahora, solo copiá el código y disfrutá viendo cómo tus botones funcionan.</p>
+                    </div>
+                </div>
                 <div class="step">
                     <p><strong>📋 Paso 3: MODIFICAR app.component.html (poner el marcador)</strong></p>
                     <p>🧠 PRIMERO PENSÁ: ¿Dónde va a poner Angular el componente según la URL?</p>
