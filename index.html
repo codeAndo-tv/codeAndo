@@ -607,7 +607,8 @@ npm start</div></div>
         <!-- ═══════════════════════════════════════════ -->
         <!-- PARTE 2 de 24 - Pegar dentro de <main>, después del Capítulo 1 -->
 
-        <!-- ═══════════════════════════════════════════ -->
+
+                <!-- ═══════════════════════════════════════════ -->
         <!-- CAPÍTULO 2: COMPONENTES                     -->
         <!-- ═══════════════════════════════════════════ -->
         <section class="chapter" id="chapter-2" style="display:none;">
@@ -762,7 +763,7 @@ npm start</div></div>
                 <h3>🛠️ MANOS A LA OBRA</h3>
                 <p><strong>Objetivo:</strong> Crear los dos componentes principales de UTNito: LoginComponent y ChatComponent, y dejarlos listos para configurar las rutas.</p>
 
-                <!-- ═══════════════ PASO 1: LOGIN ═══════════════ -->
+                <!-- ═══════════════ PASO 1: LOGIN CLI ═══════════════ -->
                 <div class="step">
                     <p><strong>📋 Paso 1: Generar el LoginComponent con Angular CLI</strong></p>
                     <p>🧠 PRIMERO PENSÁ: ¿Dónde debería vivir el componente de login? Angular CLI lo va a crear en una carpeta llamada <code>login</code> dentro de <code>src/app/</code>.</p>
@@ -782,6 +783,7 @@ npm start</div></div>
                     </div>
                 </div>
 
+                <!-- ═══════════════ PASO 2: LOGIN TS ═══════════════ -->
                 <div class="step">
                     <p><strong>📋 Paso 2: Escribir el archivo .ts del Login (el cerebro)</strong></p>
                     <p>🧠 PRIMERO PENSÁ: ¿Qué variables necesita el login? (pista: usuario, contraseña)</p>
@@ -789,57 +791,107 @@ npm start</div></div>
                     <button class="collapsible-btn" onclick="toggleCollapsible('code-2-2')">👁️ VER CÓDIGO COMPLETO (si no te sale)</button>
                     <div class="collapsible-content" id="code-2-2">
                         <p><strong>Abrí <code>src/app/login/login.component.ts</code> y reemplazá TODO por esto:</strong></p>
-                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 login.component.ts</span></div><div class="code-content"><span class="kw">import</span> { <span class="tp">Component</span> } <span class="kw">from</span> <span class="str">'@angular/core'</span>;
+                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 login.component.ts</span></div><div class="code-content"><span class="cm">// Importamos el decorador Component desde el núcleo de Angular</span>
+<span class="cm">// Sin esto, Angular no sabe que esta clase es un componente</span>
+<span class="kw">import</span> { <span class="tp">Component</span> } <span class="kw">from</span> <span class="str">'@angular/core'</span>;
 
+<span class="cm">// @Component: decorador que convierte una clase común en un componente de Angular</span>
+<span class="cm">// Las llaves { } contienen la configuración del componente (metadatos)</span>
 <span class="dec">@Component</span>({
+  <span class="cm">// selector: nombre que usamos en HTML para llamar a este componente</span>
+  <span class="cm">// Se escribe &lt;app-login&gt;&lt;/app-login&gt; y Angular lo reemplaza por este componente</span>
   <span class="pr">selector</span>: <span class="str">'app-login'</span>,
+
+  <span class="cm">// templateUrl: ruta al archivo HTML que contiene la vista del componente</span>
+  <span class="cm">// El ./ significa "en la misma carpeta donde está este archivo .ts"</span>
   <span class="pr">templateUrl</span>: <span class="str">'./login.component.html'</span>,
+
+  <span class="cm">// styleUrls: array con las rutas a los archivos CSS del componente</span>
+  <span class="cm">// Los estilos definidos acá SOLO afectan a este componente, no a otros</span>
   <span class="pr">styleUrls</span>: [<span class="str">'./login.component.css'</span>],
+
+  <span class="cm">// standalone: false → usamos el sistema tradicional con NgModule</span>
+  <span class="cm">// Si fuera true, el componente sería autosuficiente (modo standalone)</span>
   <span class="pr">standalone</span>: <span class="kw">false</span>,
 })
+<span class="cm">// export: hace que esta clase sea visible para otros archivos</span>
+<span class="cm">// LoginComponent: nombre de la clase (por convención termina en "Component")</span>
 <span class="kw">export</span> <span class="kw">class</span> <span class="tp">LoginComponent</span> {
+  <span class="cm">// Propiedad username: guarda el nombre de usuario que escribe la persona</span>
+  <span class="cm">// string: tipo de dato (texto). TypeScript verifica que solo se guarden textos</span>
+  <span class="cm">// '' = string vacío. La propiedad empieza sin nada, el usuario la llena después</span>
   <span class="var">username</span>: <span class="tp">string</span> = <span class="str">''</span>;
+
+  <span class="cm">// Propiedad password: guarda la contraseña que escribe la persona</span>
+  <span class="cm">// También es string y empieza vacía</span>
   <span class="var">password</span>: <span class="tp">string</span> = <span class="str">''</span>;
 }</div></div>
-                        <p>💡 <strong>Explicación línea por línea:</strong><br>
-                        <code>selector: 'app-login'</code> → Así se usa en HTML: <code>&lt;app-login&gt;&lt;/app-login&gt;</code><br>
-                        <code>templateUrl</code> → Ruta al archivo HTML que muestra este componente<br>
-                        <code>styleUrls</code> → Ruta al archivo CSS con los estilos<br>
-                        <code>standalone: false</code> → Usa el sistema de módulos tradicional (no standalone)<br>
-                        <code>export class LoginComponent</code> → La clase con las variables<br>
-                        <code>username: string = ''</code> → Variable de texto, empieza vacía<br>
-                        <code>password: string = ''</code> → Variable de texto, empieza vacía</p>
+                        <p>💡 <strong>Resumen del TS:</strong> Este archivo define el componente, le da un nombre (<code>app-login</code>) y declara dos variables (<code>username</code> y <code>password</code>) que después se conectan con el HTML.</p>
                     </div>
                 </div>
 
+                <!-- ═══════════════ PASO 3: LOGIN HTML ═══════════════ -->
                 <div class="step">
                     <p><strong>📋 Paso 3: Escribir el archivo .html del Login (la cara)</strong></p>
-                    <p>🧠 PRIMERO PENSÁ: ¿Qué elementos HTML necesitás para un formulario de login? (pista: título, inputs, botón)</p>
+                    <p>🧠 PRIMERO PENSÁ: ¿Qué elementos HTML necesitás para un formulario de login?</p>
                     
                     <button class="collapsible-btn" onclick="toggleCollapsible('code-2-3')">👁️ VER CÓDIGO COMPLETO (si no te sale)</button>
                     <div class="collapsible-content" id="code-2-3">
                         <p><strong>Abrí <code>src/app/login/login.component.html</code> y reemplazá TODO por esto:</strong></p>
-                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 login.component.html</span></div><div class="code-content"><span class="jsx-tag">&lt;main class="login-page"&gt;</span>
+                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 login.component.html</span></div><div class="code-content"><span class="cm">&lt;!-- main: contenedor principal de la página de login --&gt;</span>
+<span class="cm">&lt;!-- class="login-page": vincula con el CSS que definimos en login.component.css --&gt;</span>
+<span class="jsx-tag">&lt;main class="login-page"&gt;</span>
+  
+  <span class="cm">&lt;!-- section: agrupa el contenido de la tarjeta de login --&gt;</span>
+  <span class="cm">&lt;!-- class="login-card": aplica el estilo de tarjeta con bordes redondeados --&gt;</span>
   <span class="jsx-tag">&lt;section class="login-card"&gt;</span>
-    <span class="jsx-tag">&lt;h1&gt;</span>Welcome to UTNito<span class="jsx-tag">&lt;/h1&gt;</span>
-    <span class="jsx-tag">&lt;p&gt;</span>Sign in to chat with <span class="jsx-tag">&lt;strong&gt;</span>UTNito<span class="jsx-tag">&lt;/strong&gt;</span>.<span class="jsx-tag">&lt;/p&gt;</span>
 
-    <span class="jsx-tag">&lt;form&gt;</span>
+    <span class="cm">&lt;!-- div: contenedor para el bloque de la marca (título) --&gt;</span>
+    <span class="cm">&lt;!-- class="brand-block": centra el texto del título --&gt;</span>
+    <span class="jsx-tag">&lt;div class="brand-block"&gt;</span>
+      <span class="cm">&lt;!-- h1: título principal de la página --&gt;</span>
+      <span class="jsx-tag">&lt;h1&gt;</span>Welcome to UTNito<span class="jsx-tag">&lt;/h1&gt;</span>
+    <span class="jsx-tag">&lt;/div&gt;</span>
+
+    <span class="cm">&lt;!-- p: párrafo con el subtítulo debajo del título --&gt;</span>
+    <span class="cm">&lt;!-- class="subtitle": aplica color gris claro y margen inferior --&gt;</span>
+    <span class="cm">&lt;!-- &lt;strong&gt;: pone el texto en negrita --&gt;</span>
+    <span class="jsx-tag">&lt;p class="subtitle"&gt;</span>Sign in to chat with <span class="jsx-tag">&lt;strong&gt;</span>UTNito<span class="jsx-tag">&lt;/strong&gt;</span>.<span class="jsx-tag">&lt;/p&gt;</span>
+
+    <span class="cm">&lt;!-- form: formulario HTML para ingresar datos --&gt;</span>
+    <span class="cm">&lt;!-- class="login-form": aplica estilos a labels, inputs y botón dentro del form --&gt;</span>
+    <span class="jsx-tag">&lt;form class="login-form"&gt;</span>
+      
+      <span class="cm">&lt;!-- label: etiqueta que describe el campo de texto --&gt;</span>
+      <span class="cm">&lt;!-- for="username": conecta este label con el input que tiene id="username" --&gt;</span>
       <span class="jsx-tag">&lt;label for="username"&gt;</span>Username<span class="jsx-tag">&lt;/label&gt;</span>
+      
+      <span class="cm">&lt;!-- input: campo de texto donde el usuario escribe su nombre --&gt;</span>
+      <span class="cm">&lt;!-- id="username": identificador único, vinculado con el label de arriba --&gt;</span>
+      <span class="cm">&lt;!-- type="text": permite escribir cualquier texto --&gt;</span>
+      <span class="cm">&lt;!-- placeholder: texto que se ve cuando el campo está vacío --&gt;</span>
       <span class="jsx-tag">&lt;input id="username" type="text" placeholder="e.g. carlos.gardel"&gt;</span>
 
+      <span class="cm">&lt;!-- label: etiqueta para el campo de contraseña --&gt;</span>
+      <span class="cm">&lt;!-- for="password": conecta con el input de id="password" --&gt;</span>
       <span class="jsx-tag">&lt;label for="password"&gt;</span>Password<span class="jsx-tag">&lt;/label&gt;</span>
+      
+      <span class="cm">&lt;!-- input: campo de contraseña --&gt;</span>
+      <span class="cm">&lt;!-- type="password": oculta los caracteres con puntitos --&gt;</span>
       <span class="jsx-tag">&lt;input id="password" type="password" placeholder="Enter your password"&gt;</span>
 
+      <span class="cm">&lt;!-- button: botón para enviar el formulario --&gt;</span>
+      <span class="cm">&lt;!-- type="submit": al hacer click, envía el formulario --&gt;</span>
       <span class="jsx-tag">&lt;button type="submit"&gt;</span>Login<span class="jsx-tag">&lt;/button&gt;</span>
+      
     <span class="jsx-tag">&lt;/form&gt;</span>
   <span class="jsx-tag">&lt;/section&gt;</span>
 <span class="jsx-tag">&lt;/main&gt;</span></div></div>
-                        <p>💡 <strong>Explicación:</strong><br>
-                        Por ahora es HTML puro, sin conexión con TypeScript. En los próximos capítulos vamos a conectar los inputs con las variables usando <strong>binding</strong>.</p>
+                        <p>💡 <strong>Resumen del HTML:</strong> Es una estructura simple: un contenedor principal, una tarjeta centrada, un título, un formulario con dos campos (usuario y contraseña) y un botón. Por ahora es HTML puro, sin conexión con TypeScript. En los próximos capítulos conectamos los inputs con las variables.</p>
                     </div>
                 </div>
 
+                <!-- ═══════════════ PASO 4: LOGIN CSS ═══════════════ -->
                 <div class="step">
                     <p><strong>📋 Paso 4: Escribir el archivo .css del Login (el maquillaje)</strong></p>
                     <p>🧠 PRIMERO PENSÁ: ¿Cómo centrarías el formulario en la pantalla?</p>
@@ -847,69 +899,162 @@ npm start</div></div>
                     <button class="collapsible-btn" onclick="toggleCollapsible('code-2-4')">👁️ VER CÓDIGO COMPLETO (si no te sale)</button>
                     <div class="collapsible-content" id="code-2-4">
                         <p><strong>Abrí <code>src/app/login/login.component.css</code> y reemplazá TODO por esto:</strong></p>
-                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 login.component.css</span></div><div class="code-content"><span class="pr">.login-page</span> {
-  <span class="var">min-height</span>: <span class="num">100vh</span>;
-  <span class="var">display</span>: <span class="kw">flex</span>;
-  <span class="var">justify-content</span>: <span class="kw">center</span>;
-  <span class="var">align-items</span>: <span class="kw">center</span>;
-  <span class="var">padding</span>: <span class="num">24px</span>;
-  <span class="var">background-color</span>: <span class="str">#1f2024</span>;
-  <span class="var">color</span>: <span class="str">#ececf1</span>;
+                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 login.component.css (cada línea explicada)</span></div><div class="code-content"><span class="cm">/* ============================================ */</span>
+<span class="cm">/* login-page: el fondo de toda la pantalla     */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.login-page</span> {
+  <span class="var">min-height</span>: <span class="num">100vh</span>;                    <span class="cm">/* Ocupa al menos el 100% del alto de la ventana */</span>
+  <span class="var">display</span>: <span class="kw">flex</span>;                        <span class="cm">/* Activa el modo flexible para centrar contenido */</span>
+  <span class="var">justify-content</span>: <span class="kw">center</span>;            <span class="cm">/* Centra horizontalmente el contenido */</span>
+  <span class="var">align-items</span>: <span class="kw">center</span>;                <span class="cm">/* Centra verticalmente el contenido */</span>
+  <span class="var">padding</span>: <span class="num">24px</span>;                      <span class="cm">/* Espacio interior para que en móvil no toque los bordes */</span>
+  <span class="var">background-color</span>: <span class="str">#1f2024</span>;           <span class="cm">/* Fondo oscuro de la página */</span>
+  <span class="var">color</span>: <span class="str">#ececf1</span>;                      <span class="cm">/* Color del texto (blanco hueso) */</span>
 }
 
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* login-card: la tarjeta blanca/oscura centrada*/</span>
+<span class="cm">/* ============================================ */</span>
 <span class="pr">.login-card</span> {
-  <span class="var">width</span>: <span class="num">460px</span>;
-  <span class="var">max-width</span>: <span class="num">100%</span>;
-  <span class="var">background-color</span>: <span class="str">#25272d</span>;
-  <span class="var">border</span>: <span class="num">1px</span> <span class="kw">solid</span> <span class="str">#353842</span>;
-  <span class="var">border-radius</span>: <span class="num">20px</span>;
-  <span class="var">padding</span>: <span class="num">24px</span>;
+  <span class="var">width</span>: <span class="num">460px</span>;                       <span class="cm">/* Ancho fijo de la tarjeta */</span>
+  <span class="var">max-width</span>: <span class="num">100%</span>;                   <span class="cm">/* En pantallas chicas no se desborda */</span>
+  <span class="var">background-color</span>: <span class="str">#25272d</span>;           <span class="cm">/* Fondo de la tarjeta (gris oscuro) */</span>
+  <span class="var">border</span>: <span class="num">1px</span> <span class="kw">solid</span> <span class="str">#353842</span>;          <span class="cm">/* Borde sutil */</span>
+  <span class="var">border-radius</span>: <span class="num">20px</span>;                <span class="cm">/* Esquinas redondeadas */</span>
+  <span class="var">padding</span>: <span class="num">24px</span>;                      <span class="cm">/* Espacio interior */</span>
 }
 
-<span class="pr">.login-card h1</span> {
-  <span class="var">margin</span>: <span class="num">8px</span> <span class="num">0</span>;
-  <span class="var">font-size</span>: <span class="num">32px</span>;
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* brand-block: centra el título               */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.brand-block</span> {
+  <span class="var">text-align</span>: <span class="kw">center</span>;                  <span class="cm">/* Centra el texto del título */</span>
 }
 
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* brand-logo: espacio para un logo (opcional) */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.brand-logo</span> {
+  <span class="var">width</span>: <span class="num">90px</span>;                        <span class="cm">/* Ancho del logo */</span>
+  <span class="var">height</span>: <span class="num">90px</span>;                       <span class="cm">/* Alto del logo */</span>
+  <span class="var">display</span>: <span class="kw">block</span>;                      <span class="cm">/* Ocupa toda la línea */</span>
+  <span class="var">margin</span>: <span class="num">0</span> <span class="kw">auto</span>;                     <span class="cm">/* Centrado horizontal */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* Título h1 dentro de brand-block            */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.brand-block h1</span> {
+  <span class="var">margin</span>: <span class="num">8px</span> <span class="num">0</span> <span class="num">6px</span> <span class="num">0</span>;               <span class="cm">/* Margen: arriba 8px, derecha 0, abajo 6px, izquierda 0 */</span>
+  <span class="var">font-size</span>: <span class="num">32px</span>;                    <span class="cm">/* Tamaño del título */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* subtitle: texto debajo del título          */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.subtitle</span> {
+  <span class="var">margin</span>: <span class="num">0</span> <span class="num">0</span> <span class="num">20px</span> <span class="num">0</span>;                 <span class="cm">/* Solo margen inferior de 20px */</span>
+  <span class="var">color</span>: <span class="str">#a7adb7</span>;                      <span class="cm">/* Color gris claro */</span>
+  <span class="var">font-size</span>: <span class="num">16px</span>;                    <span class="cm">/* Tamaño del texto */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* LABELS: etiquetas de los campos            */</span>
+<span class="cm">/* ============================================ */</span>
 <span class="pr">.login-form label</span> {
-  <span class="var">display</span>: <span class="kw">block</span>;
-  <span class="var">margin-top</span>: <span class="num">10px</span>;
-  <span class="var">margin-bottom</span>: <span class="num">6px</span>;
-  <span class="var">font-size</span>: <span class="num">14px</span>;
-  <span class="var">font-weight</span>: <span class="num">600</span>;
+  <span class="var">display</span>: <span class="kw">block</span>;                      <span class="cm">/* Ocupa toda la línea, empuja el input abajo */</span>
+  <span class="var">margin-top</span>: <span class="num">10px</span>;                    <span class="cm">/* Espacio arriba */</span>
+  <span class="var">margin-bottom</span>: <span class="num">6px</span>;                 <span class="cm">/* Espacio abajo */</span>
+  <span class="var">font-size</span>: <span class="num">14px</span>;                    <span class="cm">/* Tamaño del label */</span>
+  <span class="var">font-weight</span>: <span class="num">600</span>;                   <span class="cm">/* Texto seminegrita */</span>
 }
 
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* INPUTS: campos de texto del formulario     */</span>
+<span class="cm">/* ============================================ */</span>
 <span class="pr">.login-form input</span> {
-  <span class="var">width</span>: <span class="num">100%</span>;
-  <span class="var">border</span>: <span class="num">1px</span> <span class="kw">solid</span> <span class="str">#424652</span>;
-  <span class="var">border-radius</span>: <span class="num">10px</span>;
-  <span class="var">padding</span>: <span class="num">11px</span> <span class="num">12px</span>;
-  <span class="var">font-size</span>: <span class="num">16px</span>;
-  <span class="var">background-color</span>: <span class="str">#30323a</span>;
-  <span class="var">color</span>: <span class="str">#ececf1</span>;
+  <span class="var">width</span>: <span class="num">100%</span>;                        <span class="cm">/* Ocupa todo el ancho disponible */</span>
+  <span class="var">border</span>: <span class="num">1px</span> <span class="kw">solid</span> <span class="str">#424652</span>;          <span class="cm">/* Borde fino gris */</span>
+  <span class="var">border-radius</span>: <span class="num">10px</span>;                <span class="cm">/* Esquinas redondeadas */</span>
+  <span class="var">padding</span>: <span class="num">11px</span> <span class="num">12px</span>;                 <span class="cm">/* Espacio interior: 11px arriba/abajo, 12px costados */</span>
+  <span class="var">font-size</span>: <span class="num">16px</span>;                    <span class="cm">/* Tamaño del texto que escribe el usuario */</span>
+  <span class="var">background-color</span>: <span class="str">#30323a</span>;           <span class="cm">/* Fondo del input (más claro que la tarjeta) */</span>
+  <span class="var">color</span>: <span class="str">#ececf1</span>;                      <span class="cm">/* Color del texto dentro del input */</span>
 }
 
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* PLACEHOLDER: texto de sugerencia en inputs  */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.login-form input::placeholder</span> {
+  <span class="var">color</span>: <span class="str">#a7adb7</span>;                      <span class="cm">/* Color gris para el placeholder */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* BOTÓN: botón de Login                      */</span>
+<span class="cm">/* ============================================ */</span>
 <span class="pr">.login-form button</span> {
-  <span class="var">margin-top</span>: <span class="num">14px</span>;
-  <span class="var">width</span>: <span class="num">100%</span>;
-  <span class="var">border</span>: <span class="kw">none</span>;
-  <span class="var">border-radius</span>: <span class="num">12px</span>;
-  <span class="var">background-color</span>: <span class="str">#cf5f6f</span>;
-  <span class="var">color</span>: <span class="str">#ffffff</span>;
-  <span class="var">padding</span>: <span class="num">12px</span> <span class="num">16px</span>;
-  <span class="var">font-size</span>: <span class="num">16px</span>;
-  <span class="var">font-weight</span>: <span class="num">700</span>;
-  <span class="var">cursor</span>: <span class="kw">pointer</span>;
+  <span class="var">margin-top</span>: <span class="num">14px</span>;                    <span class="cm">/* Espacio arriba del botón */</span>
+  <span class="var">width</span>: <span class="num">100%</span>;                        <span class="cm">/* Ocupa todo el ancho */</span>
+  <span class="var">border</span>: <span class="kw">none</span>;                        <span class="cm">/* Sin borde */</span>
+  <span class="var">border-radius</span>: <span class="num">12px</span>;                <span class="cm">/* Esquinas redondeadas */</span>
+  <span class="var">background-color</span>: <span class="str">#cf5f6f</span>;           <span class="cm">/* Color rojo coral (marca UTNito) */</span>
+  <span class="var">color</span>: <span class="str">#ffffff</span>;                      <span class="cm">/* Texto blanco */</span>
+  <span class="var">padding</span>: <span class="num">12px</span> <span class="num">16px</span>;                 <span class="cm">/* Espacio interior */</span>
+  <span class="var">font-size</span>: <span class="num">16px</span>;                    <span class="cm">/* Tamaño del texto */</span>
+  <span class="var">font-weight</span>: <span class="num">700</span>;                   <span class="cm">/* Texto en negrita */</span>
+  <span class="var">cursor</span>: <span class="kw">pointer</span>;                     <span class="cm">/* Al pasar el mouse, cambia a manito */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* BOTÓN HOVER: cuando el mouse pasa por arriba*/</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.login-form button:hover</span> {
+  <span class="var">background-color</span>: <span class="str">#b95261</span>;           <span class="cm">/* Se oscurece un poco al pasar el mouse */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* login-footer: pie de la tarjeta (opcional) */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.login-footer</span> {
+  <span class="var">margin-top</span>: <span class="num">16px</span>;                    <span class="cm">/* Espacio arriba */</span>
+  <span class="var">text-align</span>: <span class="kw">center</span>;                  <span class="cm">/* Texto centrado */</span>
+  <span class="var">color</span>: <span class="str">#a7adb7</span>;                      <span class="cm">/* Color gris claro */</span>
+  <span class="var">font-size</span>: <span class="num">14px</span>;                    <span class="cm">/* Tamaño del texto */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* program-name: nombre del programa (UTNito)  */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.program-name</span> {
+  <span class="var">margin</span>: <span class="num">0</span> <span class="num">0</span> <span class="num">4px</span> <span class="num">0</span>;                 <span class="cm">/* Solo margen inferior */</span>
+  <span class="var">color</span>: <span class="str">#e7a6b0</span>;                      <span class="cm">/* Color rosado claro */</span>
+  <span class="var">font-weight</span>: <span class="num">700</span>;                   <span class="cm">/* Negrita */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* error-text: mensajes de error (rojo)       */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.error-text</span> {
+  <span class="var">margin-top</span>: <span class="num">8px</span>;                     <span class="cm">/* Espacio arriba */</span>
+  <span class="var">margin-bottom</span>: <span class="num">0</span>;                   <span class="cm">/* Sin margen abajo */</span>
+  <span class="var">color</span>: <span class="str">#ff99a9</span>;                      <span class="cm">/* Color rojo claro para errores */</span>
+  <span class="var">font-size</span>: <span class="num">13px</span>;                    <span class="cm">/* Tamaño pequeño */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* login-capture: texto informativo abajo     */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.login-capture</span> {
+  <span class="var">margin-top</span>: <span class="num">12px</span>;                    <span class="cm">/* Espacio arriba */</span>
+  <span class="var">margin-bottom</span>: <span class="num">0</span>;                   <span class="cm">/* Sin margen abajo */</span>
+  <span class="var">color</span>: <span class="str">#a7adb7</span>;                      <span class="cm">/* Color gris claro */</span>
+  <span class="var">font-size</span>: <span class="num">13px</span>;                    <span class="cm">/* Tamaño pequeño */</span>
 }</div></div>
-                        <p>💡 <strong>Explicación:</strong><br>
-                        <code>display: flex; justify-content: center; align-items: center;</code> → centra el formulario en la pantalla<br>
-                        <code>min-height: 100vh</code> → ocupa toda la altura de la ventana<br>
-                        <code>max-width: 100%</code> → en celular no se desborda<br>
-                        <code>background-color: #cf5f6f</code> → botón rojo coral (color UTNito)</p>
+                        <p>💡 <strong>Resumen del CSS:</strong> Define el diseño visual de la página de login. Usa flexbox para centrar todo, colores oscuros estilo UTNito, bordes redondeados, y un botón rojo coral. Cada clase está comentada con lo que hace.</p>
                     </div>
                 </div>
 
-                <!-- ═══════════════ PASO 5: CHAT ═══════════════ -->
+                <!-- ═══════════════ PASO 5: CHAT CLI ═══════════════ -->
                 <div class="step">
                     <p><strong>📋 Paso 5: Generar el ChatComponent con Angular CLI</strong></p>
                     <p>🧠 PRIMERO PENSÁ: UTNito tiene dos pantallas. Ya creamos el Login. ¿Cuál falta?</p>
@@ -923,110 +1068,414 @@ npm start</div></div>
                     </div>
                 </div>
 
+                <!-- ═══════════════ PASO 6: CHAT TS ═══════════════ -->
                 <div class="step">
                     <p><strong>📋 Paso 6: Escribir el archivo .ts del Chat (el cerebro)</strong></p>
-                    <p>🧠 PRIMERO PENSÁ: ¿Qué necesita saber el chat? (pista: una lista de conversaciones, un mensaje para escribir)</p>
+                    <p>🧠 PRIMERO PENSÁ: ¿Qué variables necesita el chat?</p>
                     
                     <button class="collapsible-btn" onclick="toggleCollapsible('code-2-6')">👁️ VER CÓDIGO COMPLETO (si no te sale)</button>
                     <div class="collapsible-content" id="code-2-6">
                         <p><strong>Abrí <code>src/app/chat/chat.component.ts</code> y reemplazá TODO por esto:</strong></p>
-                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 chat.component.ts</span></div><div class="code-content"><span class="kw">import</span> { <span class="tp">Component</span> } <span class="kw">from</span> <span class="str">'@angular/core'</span>;
+                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 chat.component.ts (cada línea explicada)</span></div><div class="code-content"><span class="cm">// Importamos el decorador Component desde Angular</span>
+<span class="cm">// Es obligatorio para definir cualquier componente</span>
+<span class="kw">import</span> { <span class="tp">Component</span> } <span class="kw">from</span> <span class="str">'@angular/core'</span>;
 
+<span class="cm">// @Component: convierte esta clase en un componente de Angular</span>
 <span class="dec">@Component</span>({
+  <span class="cm">// selector: nombre HTML para usar este componente</span>
+  <span class="cm">// Se escribe &lt;app-chat&gt;&lt;/app-chat&gt; y Angular lo inserta ahí</span>
   <span class="pr">selector</span>: <span class="str">'app-chat'</span>,
+
+  <span class="cm">// templateUrl: ruta al archivo HTML con la vista del chat</span>
   <span class="pr">templateUrl</span>: <span class="str">'./chat.component.html'</span>,
+
+  <span class="cm">// styleUrls: array con los archivos CSS del chat</span>
   <span class="pr">styleUrls</span>: [<span class="str">'./chat.component.css'</span>],
+
+  <span class="cm">// standalone: false → modo tradicional con módulos</span>
   <span class="pr">standalone</span>: <span class="kw">false</span>,
 })
 <span class="kw">export</span> <span class="kw">class</span> <span class="tp">ChatComponent</span> {
-  <span class="cm">// Título que se muestra en la pantalla de chat</span>
+  <span class="cm">// title: guarda el título que se muestra en el encabezado del chat</span>
+  <span class="cm">// Por ahora es un valor fijo. Después se conectará con el backend</span>
   <span class="var">title</span>: <span class="tp">string</span> = <span class="str">'UTNito Chat'</span>;
-  
-  <span class="cm">// Mensaje que el usuario está escribiendo</span>
+
+  <span class="cm">// draftMessage: guarda lo que el usuario escribe en el input</span>
+  <span class="cm">// Empieza vacío. Se actualiza a medida que el usuario escribe</span>
   <span class="var">draftMessage</span>: <span class="tp">string</span> = <span class="str">''</span>;
 }</div></div>
-                        <p>💡 <strong>Explicación línea por línea:</strong><br>
-                        <code>selector: 'app-chat'</code> → Así se usa en HTML: <code>&lt;app-chat&gt;&lt;/app-chat&gt;</code><br>
-                        <code>standalone: false</code> → Usa el sistema de módulos tradicional<br>
-                        <code>title: string = 'UTNito Chat'</code> → Variable con el título de la pantalla<br>
-                        <code>draftMessage: string = ''</code> → Donde se guarda lo que el usuario escribe (por ahora vacío)</p>
+                        <p>💡 <strong>Resumen del TS:</strong> Declara el componente <code>app-chat</code> con dos variables: <code>title</code> (nombre de la pantalla) y <code>draftMessage</code> (mensaje que el usuario escribe).</p>
                     </div>
                 </div>
 
+                <!-- ═══════════════ PASO 7: CHAT HTML ═══════════════ -->
                 <div class="step">
                     <p><strong>📋 Paso 7: Escribir el archivo .html del Chat (la cara)</strong></p>
-                    <p>🧠 PRIMERO PENSÁ: ¿Qué se ve en una pantalla de chat? (pista: una barra lateral con conversaciones, un área de mensajes)</p>
+                    <p>🧠 PRIMERO PENSÁ: ¿Qué se ve en una pantalla de chat? Una barra lateral con conversaciones y un área de mensajes.</p>
                     
                     <button class="collapsible-btn" onclick="toggleCollapsible('code-2-7')">👁️ VER CÓDIGO COMPLETO (si no te sale)</button>
                     <div class="collapsible-content" id="code-2-7">
                         <p><strong>Abrí <code>src/app/chat/chat.component.html</code> y reemplazá TODO por esto:</strong></p>
-                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 chat.component.html</span></div><div class="code-content"><span class="jsx-tag">&lt;div class="chat-layout"&gt;</span>
-  <span class="cm">&lt;!-- Barra lateral: lista de conversaciones --&gt;</span>
+                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 chat.component.html (cada línea explicada)</span></div><div class="code-content"><span class="cm">&lt;!-- div.chat-layout: contenedor principal de la pantalla de chat --&gt;</span>
+<span class="cm">&lt;!-- Usa display:flex para poner sidebar y chat uno al lado del otro --&gt;</span>
+<span class="jsx-tag">&lt;div class="chat-layout"&gt;</span>
+
+  <span class="cm">&lt;!-- ============================================ --&gt;</span>
+  <span class="cm">&lt;!-- BARRA LATERAL (sidebar)                     --&gt;</span>
+  <span class="cm">&lt;!-- ============================================ --&gt;</span>
   <span class="jsx-tag">&lt;aside class="sidebar"&gt;</span>
-    <span class="jsx-tag">&lt;h2&gt;</span>{{ title }}<span class="jsx-tag">&lt;/h2&gt;</span>
-    <span class="jsx-tag">&lt;p&gt;</span>Seleccioná una conversación<span class="jsx-tag">&lt;/p&gt;</span>
+    
+    <span class="cm">&lt;!-- div: agrupa la parte superior del sidebar --&gt;</span>
+    <span class="jsx-tag">&lt;div&gt;</span>
+      
+      <span class="cm">&lt;!-- button: botón para crear un nuevo chat --&gt;</span>
+      <span class="cm">&lt;!-- class="new-chat-btn": estilos del botón (fondo oscuro, borde gris) --&gt;</span>
+      <span class="jsx-tag">&lt;button class="new-chat-btn"&gt;</span>+ New chat<span class="jsx-tag">&lt;/button&gt;</span>
+
+      <span class="cm">&lt;!-- p.section-title: título de sección en mayúsculas y gris --&gt;</span>
+      <span class="jsx-tag">&lt;p class="section-title"&gt;</span>YOUR CHATS<span class="jsx-tag">&lt;/p&gt;</span>
+
+      <span class="cm">&lt;!-- p.section-title: subtítulo para el filtro de búsqueda --&gt;</span>
+      <span class="jsx-tag">&lt;p class="section-title"&gt;</span>Filter chats<span class="jsx-tag">&lt;/p&gt;</span>
+
+      <span class="cm">&lt;!-- input: campo de texto para filtrar conversaciones por título --&gt;</span>
+      <span class="cm">&lt;!-- class="chat-filter-input": estilos del input de filtro --&gt;</span>
+      <span class="jsx-tag">&lt;input class="chat-filter-input" type="text" placeholder="Type to filter by title"&gt;</span>
+
+      <span class="cm">&lt;!-- ul.chat-list: lista de conversaciones (sin viñetas) --&gt;</span>
+      <span class="jsx-tag">&lt;ul class="chat-list"&gt;</span>
+        
+        <span class="cm">&lt;!-- li.chat-item.active: conversación seleccionada (fondo resaltado) --&gt;</span>
+        <span class="jsx-tag">&lt;li class="chat-item active"&gt;</span>
+          Final project planning
+        <span class="jsx-tag">&lt;/li&gt;</span>
+
+        <span class="cm">&lt;!-- li.chat-item: conversación normal (sin resaltar) --&gt;</span>
+        <span class="jsx-tag">&lt;li class="chat-item"&gt;</span>
+          REST endpoint questions
+        <span class="jsx-tag">&lt;/li&gt;</span>
+
+        <span class="cm">&lt;!-- li.chat-item: otra conversación --&gt;</span>
+        <span class="jsx-tag">&lt;li class="chat-item"&gt;</span>
+          Docker setup help
+        <span class="jsx-tag">&lt;/li&gt;</span>
+
+      <span class="jsx-tag">&lt;/ul&gt;</span>
+    <span class="jsx-tag">&lt;/div&gt;</span>
+
+    <span class="cm">&lt;!-- div.sidebar-bottom: parte inferior del sidebar (usuario y logout) --&gt;</span>
+    <span class="jsx-tag">&lt;div class="sidebar-bottom"&gt;</span>
+      
+      <span class="cm">&lt;!-- div.user-card: tarjeta con avatar y nombre del usuario --&gt;</span>
+      <span class="jsx-tag">&lt;div class="user-card"&gt;</span>
+        
+        <span class="cm">&lt;!-- span.user-avatar: círculo rojo coral con las iniciales --&gt;</span>
+        <span class="cm">&lt;!-- Por ahora tiene "U" fijo, después se llenará desde TypeScript --&gt;</span>
+        <span class="jsx-tag">&lt;span class="user-avatar"&gt;</span>U<span class="jsx-tag">&lt;/span&gt;</span>
+        
+        <span class="cm">&lt;!-- span: nombre del usuario (por ahora fijo) --&gt;</span>
+        <span class="jsx-tag">&lt;span&gt;</span>Username<span class="jsx-tag">&lt;/span&gt;</span>
+        
+      <span class="jsx-tag">&lt;/div&gt;</span>
+
+      <span class="cm">&lt;!-- span: texto de logout (después será un botón con evento click) --&gt;</span>
+      <span class="jsx-tag">&lt;span&gt;</span>Log out<span class="jsx-tag">&lt;/span&gt;</span>
+      
+    <span class="jsx-tag">&lt;/div&gt;</span>
   <span class="jsx-tag">&lt;/aside&gt;</span>
 
-  <span class="cm">&lt;!-- Área principal: mensajes --&gt;</span>
+  <span class="cm">&lt;!-- ============================================ --&gt;</span>
+  <span class="cm">&lt;!-- ÁREA PRINCIPAL (chat-main)                  --&gt;</span>
+  <span class="cm">&lt;!-- ============================================ --&gt;</span>
   <span class="jsx-tag">&lt;main class="chat-main"&gt;</span>
-    <span class="jsx-tag">&lt;p&gt;</span>Bienvenido al chat de UTNito<span class="jsx-tag">&lt;/p&gt;</span>
-    <span class="jsx-tag">&lt;p&gt;</span>Acá vas a ver los mensajes cuando selecciones una conversación.<span class="jsx-tag">&lt;/p&gt;</span>
+
+    <span class="cm">&lt;!-- header.chat-header: cabecera con título e info de conversación activa --&gt;</span>
+    <span class="jsx-tag">&lt;header class="chat-header"&gt;</span>
+      
+      <span class="cm">&lt;!-- div.brand-block: agrupa el logo y el título de la app --&gt;</span>
+      <span class="jsx-tag">&lt;div class="brand-block"&gt;</span>
+        <span class="cm">&lt;!-- h1: nombre de la aplicación en grande --&gt;</span>
+        <span class="jsx-tag">&lt;h1&gt;</span>UTNito<span class="jsx-tag">&lt;/h1&gt;</span>
+      <span class="jsx-tag">&lt;/div&gt;</span>
+
+      <span class="cm">&lt;!-- p: muestra qué conversación está activa en este momento --&gt;</span>
+      <span class="jsx-tag">&lt;p&gt;</span>Active conversation: Final project planning<span class="jsx-tag">&lt;/p&gt;</span>
+      
+    <span class="jsx-tag">&lt;/header&gt;</span>
+
+    <span class="cm">&lt;!-- section.messages: área donde se muestran los mensajes --&gt;</span>
+    <span class="jsx-tag">&lt;section class="messages"&gt;</span>
+      
+      <span class="cm">&lt;!-- p: mensaje de ejemplo del asistente --&gt;</span>
+      <span class="jsx-tag">&lt;p&gt;</span>Hi! Ready to review today's class goals?<span class="jsx-tag">&lt;/p&gt;</span>
+      
+      <span class="cm">&lt;!-- p: mensaje de ejemplo del usuario --&gt;</span>
+      <span class="jsx-tag">&lt;p&gt;</span>Yes, show me the checkpoint for class 2.<span class="jsx-tag">&lt;/p&gt;</span>
+      
+    <span class="jsx-tag">&lt;/section&gt;</span>
+
+    <span class="cm">&lt;!-- div.composer-wrap: barra inferior para escribir mensajes --&gt;</span>
+    <span class="jsx-tag">&lt;div class="composer-wrap"&gt;</span>
+      
+      <span class="cm">&lt;!-- div.composer: contiene el textarea y el botón de enviar --&gt;</span>
+      <span class="jsx-tag">&lt;div class="composer"&gt;</span>
+        
+        <span class="cm">&lt;!-- textarea: campo de texto multilínea para escribir el mensaje --&gt;</span>
+        <span class="cm">&lt;!-- placeholder: texto que se ve cuando el campo está vacío --&gt;</span>
+        <span class="jsx-tag">&lt;textarea placeholder="Escribe un mensaje..."&gt;</span><span class="jsx-tag">&lt;/textarea&gt;</span>
+        
+        <span class="cm">&lt;!-- button: botón para enviar el mensaje --&gt;</span>
+        <span class="jsx-tag">&lt;button&gt;</span>Send<span class="jsx-tag">&lt;/button&gt;</span>
+        
+      <span class="jsx-tag">&lt;/div&gt;</span>
+    <span class="jsx-tag">&lt;/div&gt;</span>
+
   <span class="jsx-tag">&lt;/main&gt;</span>
 <span class="jsx-tag">&lt;/div&gt;</span></div></div>
-                        <p>💡 <strong>Explicación:</strong><br>
-                        <code>{{ title }}</code> → interpolación: muestra la variable <code>title</code> del TypeScript ("UTNito Chat")<br>
-                        <code>&lt;aside class="sidebar"&gt;</code> → barra lateral donde van a aparecer las conversaciones<br>
-                        <code>&lt;main class="chat-main"&gt;</code> → área principal donde se muestran los mensajes<br>
-                        Por ahora es una estructura simple. En los próximos capítulos le vamos a agregar la lista de conversaciones y los mensajes reales.</p>
+                        <p>💡 <strong>Resumen del HTML:</strong> Estructura completa del chat con barra lateral (botón nuevo chat, filtro, lista de conversaciones, usuario), cabecera, área de mensajes y compositor para escribir. Todo con clases CSS que se conectan con el archivo de estilos.</p>
                     </div>
                 </div>
 
+                <!-- ═══════════════ PASO 8: CHAT CSS ═══════════════ -->
                 <div class="step">
                     <p><strong>📋 Paso 8: Escribir el archivo .css del Chat (el maquillaje)</strong></p>
-                    <p>🧠 PRIMERO PENSÁ: ¿Cómo organizarías visualmente una pantalla de chat? (pista: barra lateral a la izquierda, mensajes a la derecha)</p>
+                    <p>🧠 PRIMERO PENSÁ: ¿Cómo organizarías visualmente una pantalla de chat?</p>
                     
                     <button class="collapsible-btn" onclick="toggleCollapsible('code-2-8')">👁️ VER CÓDIGO COMPLETO (si no te sale)</button>
                     <div class="collapsible-content" id="code-2-8">
                         <p><strong>Abrí <code>src/app/chat/chat.component.css</code> y reemplazá TODO por esto:</strong></p>
-                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 chat.component.css</span></div><div class="code-content"><span class="pr">.chat-layout</span> {
-  <span class="var">display</span>: <span class="kw">flex</span>;
-  <span class="var">height</span>: <span class="num">100vh</span>;
-  <span class="var">background-color</span>: <span class="str">#1f2024</span>;
-  <span class="var">color</span>: <span class="str">#ececf1</span>;
+                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 chat.component.css (cada línea explicada)</span></div><div class="code-content"><span class="cm">/* ============================================ */</span>
+<span class="cm">/* chat-layout: contenedor principal del chat   */</span>
+<span class="cm">/* Ocupa toda la pantalla con flexbox           */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.chat-layout</span> {
+  <span class="var">min-height</span>: <span class="num">100vh</span>;                    <span class="cm">/* Ocupa al menos el 100% del alto de la ventana */</span>
+  <span class="var">display</span>: <span class="kw">flex</span>;                        <span class="cm">/* Flexbox: sidebar a la izquierda, chat a la derecha */</span>
+  <span class="var">background-color</span>: <span class="str">#1f2024</span>;           <span class="cm">/* Fondo oscuro general */</span>
+  <span class="var">color</span>: <span class="str">#ececf1</span>;                      <span class="cm">/* Color de texto blanco hueso */</span>
 }
 
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* sidebar: barra lateral izquierda            */</span>
+<span class="cm">/* ============================================ */</span>
 <span class="pr">.sidebar</span> {
-  <span class="var">width</span>: <span class="num">300px</span>;
-  <span class="var">background-color</span>: <span class="str">#25272d</span>;
-  <span class="var">border-right</span>: <span class="num">1px</span> <span class="kw">solid</span> <span class="str">#353842</span>;
-  <span class="var">padding</span>: <span class="num">20px</span>;
+  <span class="var">width</span>: <span class="num">280px</span>;                       <span class="cm">/* Ancho fijo de la barra lateral */</span>
+  <span class="var">min-width</span>: <span class="num">280px</span>;                   <span class="cm">/* No se achica menos de 280px */</span>
+  <span class="var">padding</span>: <span class="num">14px</span>;                      <span class="cm">/* Espacio interior */</span>
+  <span class="var">border-right</span>: <span class="num">1px</span> <span class="kw">solid</span> <span class="str">#343740</span>;   <span class="cm">/* Línea divisoria derecha */</span>
+  <span class="var">background-color</span>: <span class="str">#15161a</span>;           <span class="cm">/* Fondo más oscuro que el chat */</span>
+  <span class="var">display</span>: <span class="kw">flex</span>;                        <span class="cm">/* Flexbox interno */</span>
+  <span class="var">flex-direction</span>: <span class="kw">column</span>;               <span class="cm">/* Apila elementos verticalmente */</span>
+  <span class="var">justify-content</span>: <span class="kw">space-between</span>;       <span class="cm">/* Empuja la parte inferior abajo */</span>
 }
 
-<span class="pr">.sidebar h2</span> {
-  <span class="var">margin</span>: <span class="num">0</span> <span class="num">0</span> <span class="num">15px</span> <span class="num">0</span>;
-  <span class="var">font-size</span>: <span class="num">20px</span>;
-  <span class="var">color</span>: <span class="str">#cf5f6f</span>;
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* new-chat-btn: botón "+ New chat"           */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.new-chat-btn</span> {
+  <span class="var">width</span>: <span class="num">100%</span>;                        <span class="cm">/* Ocupa todo el ancho */</span>
+  <span class="var">padding</span>: <span class="num">10px</span>;                      <span class="cm">/* Espacio interior */</span>
+  <span class="var">border</span>: <span class="num">1px</span> <span class="kw">solid</span> <span class="str">#434752</span>;         <span class="cm">/* Borde gris */</span>
+  <span class="var">border-radius</span>: <span class="num">10px</span>;                <span class="cm">/* Esquinas redondeadas */</span>
+  <span class="var">background-color</span>: <span class="str">#272a31</span>;           <span class="cm">/* Fondo del botón */</span>
+  <span class="var">color</span>: <span class="str">#ececf1</span>;                      <span class="cm">/* Texto blanco hueso */</span>
+  <span class="var">text-align</span>: <span class="kw">left</span>;                    <span class="cm">/* Texto alineado a la izquierda */</span>
+  <span class="var">cursor</span>: <span class="kw">pointer</span>;                     <span class="cm">/* Manito al pasar el mouse */</span>
 }
 
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* section-title: títulos en la sidebar        */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.section-title</span> {
+  <span class="var">margin</span>: <span class="num">16px</span> <span class="num">0</span> <span class="num">8px</span>;                   <span class="cm">/* Márgenes: arriba 16px, costados 0, abajo 8px */</span>
+  <span class="var">color</span>: <span class="str">#a8adba</span>;                      <span class="cm">/* Color gris claro */</span>
+  <span class="var">text-transform</span>: <span class="kw">uppercase</span>;             <span class="cm">/* Convierte texto a MAYÚSCULAS */</span>
+  <span class="var">font-size</span>: <span class="num">12px</span>;                    <span class="cm">/* Tamaño pequeño */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* chat-filter-input: campo de filtro          */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.chat-filter-input</span> {
+  <span class="var">width</span>: <span class="num">100%</span>;                        <span class="cm">/* Ocupa todo el ancho */</span>
+  <span class="var">margin-bottom</span>: <span class="num">12px</span>;                 <span class="cm">/* Espacio abajo */</span>
+  <span class="var">padding</span>: <span class="num">9px</span> <span class="num">10px</span>;                   <span class="cm">/* Espacio interior */</span>
+  <span class="var">border</span>: <span class="num">1px</span> <span class="kw">solid</span> <span class="str">#454a57</span>;         <span class="cm">/* Borde gris */</span>
+  <span class="var">border-radius</span>: <span class="num">10px</span>;                <span class="cm">/* Esquinas redondeadas */</span>
+  <span class="var">background-color</span>: <span class="str">#262b37</span>;           <span class="cm">/* Fondo del input */</span>
+  <span class="var">color</span>: <span class="str">#ececf1</span>;                      <span class="cm">/* Color del texto */</span>
+  <span class="var">font-size</span>: <span class="num">14px</span>;                    <span class="cm">/* Tamaño del texto */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* chat-list: lista de conversaciones          */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.chat-list</span> {
+  <span class="var">margin</span>: <span class="num">0</span>;                            <span class="cm">/* Sin margen */</span>
+  <span class="var">padding</span>: <span class="num">0</span>;                          <span class="cm">/* Sin relleno */</span>
+  <span class="var">list-style</span>: <span class="kw">none</span>;                    <span class="cm">/* Sin viñetas (sin puntitos) */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* chat-item: cada conversación en la lista    */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.chat-item</span> {
+  <span class="var">margin-bottom</span>: <span class="num">8px</span>;                  <span class="cm">/* Espacio entre items */</span>
+  <span class="var">border</span>: <span class="num">1px</span> <span class="kw">solid</span> <span class="kw">transparent</span>;        <span class="cm">/* Borde invisible (se activa al seleccionar) */</span>
+  <span class="var">border-radius</span>: <span class="num">10px</span>;                <span class="cm">/* Esquinas redondeadas */</span>
+  <span class="var">padding</span>: <span class="num">5px</span>;                        <span class="cm">/* Espacio interior */</span>
+  <span class="var">display</span>: <span class="kw">flex</span>;                        <span class="cm">/* Flexbox para alinear contenido */</span>
+  <span class="var">align-items</span>: <span class="kw">center</span>;                 <span class="cm">/* Centrar verticalmente */</span>
+  <span class="var">gap</span>: <span class="num">6px</span>;                          <span class="cm">/* Espacio entre elementos internos */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* chat-item.active: conversación seleccionada */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.chat-item.active</span> {
+  <span class="var">border-color</span>: <span class="str">#444854</span>;               <span class="cm">/* Borde visible gris */</span>
+  <span class="var">background-color</span>: <span class="str">#2a2d35</span>;           <span class="cm">/* Fondo resaltado */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* sidebar-bottom: sección inferior del sidebar*/</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.sidebar-bottom</span> {
+  <span class="var">border-top</span>: <span class="num">1px</span> <span class="kw">solid</span> <span class="str">#2f3139</span>;      <span class="cm">/* Línea divisoria superior */</span>
+  <span class="var">padding-top</span>: <span class="num">10px</span>;                   <span class="cm">/* Espacio arriba de la línea */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* user-card: tarjeta con avatar y nombre      */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.user-card</span> {
+  <span class="var">display</span>: <span class="kw">flex</span>;                        <span class="cm">/* Flexbox para avatar al lado del nombre */</span>
+  <span class="var">align-items</span>: <span class="kw">center</span>;                 <span class="cm">/* Centrar verticalmente */</span>
+  <span class="var">gap</span>: <span class="num">10px</span>;                         <span class="cm">/* Espacio entre avatar y nombre */</span>
+  <span class="var">margin-bottom</span>: <span class="num">8px</span>;                  <span class="cm">/* Espacio abajo */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* user-avatar: círculo con iniciales          */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.user-avatar</span> {
+  <span class="var">width</span>: <span class="num">38px</span>;                        <span class="cm">/* Ancho del círculo */</span>
+  <span class="var">height</span>: <span class="num">38px</span>;                       <span class="cm">/* Alto del círculo */</span>
+  <span class="var">border-radius</span>: <span class="num">10px</span>;                <span class="cm">/* Esquinas redondeadas (casi círculo) */</span>
+  <span class="var">background-color</span>: <span class="str">#cf5f6f</span>;           <span class="cm">/* Fondo rojo coral */</span>
+  <span class="var">color</span>: <span class="str">#ffffff</span>;                      <span class="cm">/* Texto blanco */</span>
+  <span class="var">display</span>: <span class="kw">inline-flex</span>;                 <span class="cm">/* Flexbox en línea */</span>
+  <span class="var">align-items</span>: <span class="kw">center</span>;                 <span class="cm">/* Centrar letras verticalmente */</span>
+  <span class="var">justify-content</span>: <span class="kw">center</span>;             <span class="cm">/* Centrar letras horizontalmente */</span>
+  <span class="var">font-weight</span>: <span class="num">700</span>;                   <span class="cm">/* Letras en negrita */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* chat-main: área principal del chat          */</span>
+<span class="cm">/* ============================================ */</span>
 <span class="pr">.chat-main</span> {
-  <span class="var">flex</span>: <span class="num">1</span>;
-  <span class="var">padding</span>: <span class="num">40px</span>;
-  <span class="var">display</span>: <span class="kw">flex</span>;
-  <span class="var">flex-direction</span>: <span class="kw">column</span>;
-  <span class="var">justify-content</span>: <span class="kw">center</span>;
-  <span class="var">align-items</span>: <span class="kw">center</span>;
-  <span class="var">text-align</span>: <span class="kw">center</span>;
+  <span class="var">min-width</span>: <span class="num">0</span>;                       <span class="cm">/* Permite que se achique si es necesario */</span>
+  <span class="var">flex</span>: <span class="num">1</span>;                            <span class="cm">/* Ocupa todo el espacio restante */</span>
+  <span class="var">display</span>: <span class="kw">flex</span>;                        <span class="cm">/* Flexbox interno */</span>
+  <span class="var">flex-direction</span>: <span class="kw">column</span>;               <span class="cm">/* Apila header, mensajes y compositor */</span>
 }
 
-<span class="pr">.chat-main p</span> {
-  <span class="var">color</span>: <span class="str">#a0a0b0</span>;
-  <span class="var">font-size</span>: <span class="num">16px</span>;
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* chat-header: cabecera del chat              */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.chat-header</span> {
+  <span class="var">padding</span>: <span class="num">16px</span>;                      <span class="cm">/* Espacio interior */</span>
+  <span class="var">border-bottom</span>: <span class="num">1px</span> <span class="kw">solid</span> <span class="str">#343740</span>;   <span class="cm">/* Línea divisoria inferior */</span>
+  <span class="var">background-color</span>: <span class="str">#262a34</span>;           <span class="cm">/* Fondo ligeramente diferente */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* brand-block: título de la app en el chat    */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.chat-header .brand-block</span> {
+  <span class="var">display</span>: <span class="kw">flex</span>;                        <span class="cm">/* Flexbox para alinear logo y título */</span>
+  <span class="var">align-items</span>: <span class="kw">center</span>;                 <span class="cm">/* Centrar verticalmente */</span>
+  <span class="var">gap</span>: <span class="num">10px</span>;                         <span class="cm">/* Espacio entre logo y título */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* Título h1 en el header                      */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.chat-header h1</span> {
+  <span class="var">margin</span>: <span class="num">0</span>;                            <span class="cm">/* Sin margen */</span>
+  <span class="var">font-size</span>: <span class="num">40px</span>;                    <span class="cm">/* Título grande */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* Párrafo en el header                        */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.chat-header p</span> {
+  <span class="var">margin</span>: <span class="num">2px</span> <span class="num">0</span> <span class="num">0</span>;                     <span class="cm">/* Margen superior pequeño */</span>
+  <span class="var">color</span>: <span class="str">#b4bac7</span>;                      <span class="cm">/* Color gris claro */</span>
+  <span class="var">font-size</span>: <span class="num">18px</span>;                    <span class="cm">/* Tamaño del texto */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* messages: área de mensajes                  */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.messages</span> {
+  <span class="var">flex</span>: <span class="num">1</span>;                            <span class="cm">/* Ocupa todo el espacio disponible */</span>
+  <span class="var">padding</span>: <span class="num">16px</span>;                      <span class="cm">/* Espacio interior */</span>
+  <span class="var">overflow</span>: <span class="kw">auto</span>;                      <span class="cm">/* Scroll si hay muchos mensajes */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* composer-wrap: barra de escritura           */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.composer-wrap</span> {
+  <span class="var">padding</span>: <span class="num">12px</span> <span class="num">16px</span>;                   <span class="cm">/* Espacio interior */</span>
+  <span class="var">border-top</span>: <span class="num">1px</span> <span class="kw">solid</span> <span class="str">#343740</span>;      <span class="cm">/* Línea divisoria superior */</span>
+  <span class="var">background-color</span>: <span class="str">#262a34</span>;           <span class="cm">/* Fondo igual al header */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* composer: textarea + botón                  */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.composer</span> {
+  <span class="var">display</span>: <span class="kw">flex</span>;                        <span class="cm">/* Flexbox: textarea a la izquierda, botón a la derecha */</span>
+  <span class="var">gap</span>: <span class="num">10px</span>;                         <span class="cm">/* Espacio entre textarea y botón */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* textarea del compositor                     */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.composer textarea</span> {
+  <span class="var">flex</span>: <span class="num">1</span>;                            <span class="cm">/* Ocupa todo el espacio disponible */</span>
+  <span class="var">padding</span>: <span class="num">10px</span>;                      <span class="cm">/* Espacio interior */</span>
+  <span class="var">border</span>: <span class="num">1px</span> <span class="kw">solid</span> <span class="str">#454a57</span>;         <span class="cm">/* Borde gris */</span>
+  <span class="var">border-radius</span>: <span class="num">10px</span>;                <span class="cm">/* Esquinas redondeadas */</span>
+  <span class="var">background-color</span>: <span class="str">#313542</span>;           <span class="cm">/* Fondo del textarea */</span>
+  <span class="var">color</span>: <span class="str">#ececf1</span>;                      <span class="cm">/* Color del texto */</span>
+  <span class="var">font-size</span>: <span class="num">15px</span>;                    <span class="cm">/* Tamaño del texto */</span>
+  <span class="var">resize</span>: <span class="kw">none</span>;                       <span class="cm">/* Evita que el usuario cambie el tamaño */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* botón Send del compositor                   */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.composer button</span> {
+  <span class="var">border</span>: <span class="kw">none</span>;                        <span class="cm">/* Sin borde */</span>
+  <span class="var">border-radius</span>: <span class="num">10px</span>;                <span class="cm">/* Esquinas redondeadas */</span>
+  <span class="var">background-color</span>: <span class="str">#cf5f6f</span>;           <span class="cm">/* Rojo coral UTNito */</span>
+  <span class="var">color</span>: <span class="str">#ffffff</span>;                      <span class="cm">/* Texto blanco */</span>
+  <span class="var">padding</span>: <span class="num">0</span> <span class="num">20px</span>;                     <span class="cm">/* Padding solo horizontal */</span>
+  <span class="var">font-size</span>: <span class="num">16px</span>;                    <span class="cm">/* Tamaño del texto */</span>
+  <span class="var">font-weight</span>: <span class="num">700</span>;                   <span class="cm">/* Negrita */</span>
+}
+
+<span class="cm">/* ============================================ */</span>
+<span class="cm">/* botón Send deshabilitado                    */</span>
+<span class="cm">/* ============================================ */</span>
+<span class="pr">.composer button[disabled]</span> {
+  <span class="var">opacity</span>: <span class="num">0.65</span>;                      <span class="cm">/* Más transparente cuando está deshabilitado */</span>
+  <span class="var">cursor</span>: <span class="kw">not-allowed</span>;                  <span class="cm">/* Cursor de "no permitido" */</span>
 }</div></div>
-                        <p>💡 <strong>Explicación:</strong><br>
-                        <code>display: flex</code> → organiza la sidebar y el chat uno al lado del otro<br>
-                        <code>height: 100vh</code> → ocupa toda la altura de la pantalla<br>
-                        <code>.sidebar</code> → Panel lateral fijo de 300px con borde derecho<br>
-                        <code>.chat-main</code> → Ocupa el resto del espacio (flex: 1) y centra el contenido</p>
+                        <p>💡 <strong>Resumen del CSS:</strong> Define todo el diseño visual del chat. Barra lateral con lista de conversaciones, cabecera con título, área de mensajes con scroll y barra de escritura abajo. Cada clase está comentada explicando qué hace.</p>
                     </div>
                 </div>
 
@@ -1038,31 +1487,48 @@ npm start</div></div>
                     <button class="collapsible-btn" onclick="toggleCollapsible('code-2-9')">👁️ VER CÓDIGO COMPLETO (si no te sale)</button>
                     <div class="collapsible-content" id="code-2-9">
                         <p><strong>Abrí <code>src/app/app.module.ts</code> y reemplazá TODO por esto:</strong></p>
-                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 app.module.ts</span></div><div class="code-content"><span class="kw">import</span> { <span class="tp">NgModule</span> } <span class="kw">from</span> <span class="str">'@angular/core'</span>;
+                        <div class="code-block"><div class="code-header"><div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div><span class="code-filename">📄 app.module.ts (cada línea explicada)</span></div><div class="code-content"><span class="cm">// NgModule: decorador que convierte una clase en un MÓDULO de Angular</span>
+<span class="cm">// El módulo es la caja que contiene todos los componentes</span>
+<span class="kw">import</span> { <span class="tp">NgModule</span> } <span class="kw">from</span> <span class="str">'@angular/core'</span>;
+
+<span class="cm">// BrowserModule: obligatorio para que la app funcione en navegadores</span>
+<span class="cm">// Sin esto, Angular no puede renderizar HTML en Chrome, Firefox, etc.</span>
 <span class="kw">import</span> { <span class="tp">BrowserModule</span> } <span class="kw">from</span> <span class="str">'@angular/platform-browser'</span>;
 
+<span class="cm">// Importamos nuestros componentes</span>
+<span class="cm">// AppComponent: el componente principal que arranca la aplicación</span>
 <span class="kw">import</span> { <span class="tp">AppComponent</span> } <span class="kw">from</span> <span class="str">'./app.component'</span>;
+<span class="cm">// LoginComponent: la pantalla de login que creamos en el Paso 1</span>
 <span class="kw">import</span> { <span class="tp">LoginComponent</span> } <span class="kw">from</span> <span class="str">'./login/login.component'</span>;
+<span class="cm">// ChatComponent: la pantalla de chat que creamos en el Paso 5</span>
 <span class="kw">import</span> { <span class="tp">ChatComponent</span> } <span class="kw">from</span> <span class="str">'./chat/chat.component'</span>;
 
+<span class="cm">// @NgModule: decorador que define el módulo principal</span>
 <span class="dec">@NgModule</span>({
+  <span class="cm">// declarations: array con todos los componentes que pertenecen a este módulo</span>
+  <span class="cm">// Cada componente DEBE estar declarado aquí para que Angular lo reconozca</span>
   <span class="pr">declarations</span>: [
-    <span class="tp">AppComponent</span>,
-    <span class="tp">LoginComponent</span>,
-    <span class="tp">ChatComponent</span>
+    <span class="tp">AppComponent</span>,      <span class="cm">// Componente raíz (arranca primero)</span>
+    <span class="tp">LoginComponent</span>,    <span class="cm">// Componente de la pantalla de login</span>
+    <span class="tp">ChatComponent</span>       <span class="cm">// Componente de la pantalla de chat</span>
   ],
+
+  <span class="cm">// imports: otros módulos que necesitamos para funcionar</span>
+  <span class="cm">// Es como traer herramientas de otras cajas</span>
   <span class="pr">imports</span>: [
-    <span class="tp">BrowserModule</span>
+    <span class="tp">BrowserModule</span>       <span class="cm">// Obligatorio: hace que la app funcione en el navegador</span>
   ],
+
+  <span class="cm">// providers: servicios disponibles en toda la aplicación</span>
+  <span class="cm">// Por ahora está vacío, después agregaremos servicios aquí</span>
   <span class="pr">providers</span>: [],
+
+  <span class="cm">// bootstrap: el componente que arranca cuando inicia la aplicación</span>
+  <span class="cm">// Siempre es AppComponent (el componente raíz)</span>
   <span class="pr">bootstrap</span>: [<span class="tp">AppComponent</span>],
 })
 <span class="kw">export</span> <span class="kw">class</span> <span class="tp">AppModule</span> {}</div></div>
-                        <p>💡 <strong>Explicación:</strong><br>
-                        <code>declarations</code> → Le decimos a Angular qué componentes existen en nuestra aplicación. Sin esto, Angular no los reconoce.<br>
-                        <code>imports</code> → Traemos <code>BrowserModule</code>, obligatorio para que la app funcione en el navegador.<br>
-                        <code>bootstrap</code> → El componente que arranca primero (siempre <code>AppComponent</code>).<br><br>
-                        <strong>⚠️ En el próximo capítulo (2.5) vamos a modificar este archivo para agregar las rutas.</strong></p>
+                        <p>💡 <strong>Resumen del módulo:</strong> El <code>app.module.ts</code> es el archivo central que registra todos los componentes. Sin esto, Angular no sabe que existen. En el próximo capítulo (2.5) vamos a agregarle <code>RouterModule</code> para las rutas.</p>
                     </div>
                 </div>
 
@@ -1116,6 +1582,7 @@ npm start</div></div>
         <!-- ═══════════════════════════════════════════ -->
         <!-- FIN CAPÍTULO 2                             -->
         <!-- ═══════════════════════════════════════════ -->
+
         <!-- ═══════════════════════════════════════════ -->
         <!-- CAPÍTULO 2.5: RUTAS RÁPIDAS                 -->
         <!-- ═══════════════════════════════════════════ -->
